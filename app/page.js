@@ -49,7 +49,7 @@ export default function ComparePage() {
         <div className="hero-section">
           <div className="hero-tag">Quote Intelligence</div>
           <h1 className="hero-title">Compare. Win. Deliver.</h1>
-          <p className="hero-sub">Upload HomeLane and competitor quotes for an instant apple-to-apple price &amp; spec analysis.</p>
+          <p className="hero-sub">Hey HomeLane Champs! Use this tool to compare our HomeLane quotes with that of the competitors and understand why the quote is higher and get actionable sales strategy to win customers.</p>
           <button className="btn btn-primary btn-xl" onClick={() => setActiveTab("compare")}>
             + New Comparison
           </button>
