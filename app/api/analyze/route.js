@@ -35,8 +35,8 @@ Assume the customer considers all brands equal and winning the order is based st
    - Point out if module sizes are different in the same room, leading to price differences.
    - Point out if HomeLane missed adding some products that the competitor added, and advise fixing them.
 3. If specs, modules, sizes, and products ARE exactly the same, but HomeLane prices are higher:
-   - Recommend increasing the discount % of Woodwork in HomeLane (Total Discount / Total Woodwork value) by X% (up to a max of 40%) to match the quote.
-   - If even after a 40% discount on Woodwork the HomeLane quote is still higher, calculate the final difference price and instruct the salesperson to raise an exceptional discount request with the management for that specific amount.
+   - Recommend increasing the woodwork discount (up to a max of 40%) to close the gap.
+   - If even after a 40% woodwork discount the HomeLane quote is still higher, calculate the final remaining price difference for the sales person to address as a standalone gap.
 - Do NOT include markdown formatting inside the JSON string values.
 - Keep factor names concise (max 4 words).
 `;
