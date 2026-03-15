@@ -18,12 +18,21 @@ export default function ComparePage() {
   const hlHigherCount = history.filter(h => h.verdict === "HL_HIGHER").length;
 
   useEffect(() => {
-    // We must set workerSrc in a side effect or global scope
     pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
     const saved = localStorage.getItem("hl_comparisons_next");
     if (saved) {
       try { setHistory(JSON.parse(saved)); } catch {}
     }
+    // Check for shared result in URL
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const encoded = params.get("result");
+      if (encoded) {
+        const decoded = JSON.parse(decodeURIComponent(atob(encoded)));
+        setCurrentResult(decoded);
+        setActiveTab("results");
+      }
+    } catch {}
   }, []);
 
   const saveHistory = (newHistory) => {
@@ -350,6 +359,7 @@ function ResultsView({ result, onBack, onNew }) {
   const meta = result.meta;
   const pct = typeof result.priceDiffPercent === "number" ? result.priceDiffPercent : 0;
   const absPct = Math.abs(pct).toFixed(1) + "%";
+  const [toast, setToast] = useState("");
 
   const getDiffAmount = (h, l) => {
     const parse = s => s ? parseInt(s.replace(/[^\d]/g, ""), 10) || 0 : 0;
@@ -361,18 +371,35 @@ function ResultsView({ result, onBack, onNew }) {
                  : pct < 0 ? `HL ₹${getDiffAmount(result.compPrice, result.hlPrice)} less`
                  : "Same price";
 
+  const handleShare = () => {
+    try {
+      const encoded = btoa(encodeURIComponent(JSON.stringify(result)));
+      const url = `${window.location.origin}${window.location.pathname}?result=${encoded}`;
+      navigator.clipboard.writeText(url);
+      setToast("✅ Link copied to clipboard!");
+      setTimeout(() => setToast(""), 3000);
+    } catch {
+      setToast("❌ Failed to copy link.");
+      setTimeout(() => setToast(""), 3000);
+    }
+  };
+
   return (
     <div className="page active">
-      <nav className="navbar glass-nav">
+      <nav className="navbar glass-nav no-print">
         <div className="nav-left">
            <button className="btn btn-icon btn-ghost" onClick={onBack}>←</button>
            <span className="nav-brand">Back to Dashboard</span>
         </div>
         <div className="nav-right">
-          <button className="btn btn-secondary" onClick={() => window.print()}>🖨️ Print</button>
-          <button className="btn btn-primary" onClick={onNew}>New Comparison</button>
+          <button className="btn btn-secondary" onClick={handleShare}>🔗 Share</button>
+          <button className="btn btn-secondary" onClick={() => window.print()}>⬇️ Download PDF</button>
+          <button className="btn btn-primary no-print" onClick={onNew}>New Comparison</button>
         </div>
       </nav>
+      {toast && (
+        <div className="share-toast">{toast}</div>
+      )}
 
       <main className="main-content results-main">
         <div className={`verdict-banner glass-card ${result.verdict === 'HL_HIGHER' ? 'hl-higher' : result.verdict === 'HL_LOWER' ? 'hl-lower' : 'hl-equal'}`}>
