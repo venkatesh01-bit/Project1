@@ -405,6 +405,112 @@ function ResultsView({ result, onBack, onNew }) {
           </div>
         </div>
 
+        {result.hlBreakdown && result.compBreakdown && (
+          <div className="breakdown-row">
+            <div className="breakdown-card glass-card">
+              <div className="breakdown-header">
+                <div className="logo-mark sm">HL</div>
+                <span>HomeLane Breakdown</span>
+              </div>
+              <div className="breakdown-list">
+                <div className="breakdown-item">
+                  <span className="bi-label">Base Quote</span>
+                  <span className="bi-value">{result.hlBreakdown.baseQuote}</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="bi-label">Design & Mgmt Fee</span>
+                  <span className="bi-value">{result.hlBreakdown.designFee}</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="bi-label">Discount</span>
+                  <span className="bi-value" style={{color: 'var(--green)'}}>{result.hlBreakdown.discount}</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="bi-label">Tax (GST)</span>
+                  <span className="bi-value">{result.hlBreakdown.tax}</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="bi-label">Quote Validity</span>
+                  <span className="bi-value">{result.hlBreakdown.validity}</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="bi-label">Scope</span>
+                  <span className="bi-value">{result.hlBreakdown.scope}</span>
+                </div>
+                 <div className="breakdown-item">
+                  <span className="bi-label">Kitchen</span>
+                  <span className="bi-value">{result.hlBreakdown.kitchen}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="breakdown-card glass-card">
+              <div className="breakdown-header">
+                <div className="stat-icon" style={{fontSize: '1.2rem'}}>🏢</div>
+                <span>{meta.competitor} Breakdown</span>
+              </div>
+              <div className="breakdown-list">
+                <div className="breakdown-item">
+                  <span className="bi-label">Base Quote</span>
+                  <span className="bi-value">{result.compBreakdown.baseQuote}</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="bi-label">Design & Mgmt Fee</span>
+                  <span className="bi-value">{result.compBreakdown.designFee}</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="bi-label">Discount</span>
+                  <span className="bi-value" style={{color: 'var(--green)'}}>{result.compBreakdown.discount}</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="bi-label">Tax (GST)</span>
+                  <span className="bi-value">{result.compBreakdown.tax}</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="bi-label">Quote Validity</span>
+                  <span className="bi-value">{result.compBreakdown.validity}</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="bi-label">Scope</span>
+                  <span className="bi-value">{result.compBreakdown.scope}</span>
+                </div>
+                <div className="breakdown-item">
+                  <span className="bi-label">Kitchen</span>
+                  <span className="bi-value">{result.compBreakdown.kitchen}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {result.rooms && result.rooms.length > 0 && (
+          <div className="results-section glass-card">
+            <h3 className="section-title">🏠 Room-by-Room Comparison</h3>
+            <div className="room-table-wrap">
+              <table className="room-table">
+                <thead>
+                  <tr>
+                    <th>Room</th>
+                    <th>{meta.competitor}</th>
+                    <th>HomeLane</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {result.rooms.map((room, i) => (
+                    <tr key={i}>
+                      <td className="room-name">{room.name}</td>
+                      <td className="room-price room-price-comp">{room.compValue}</td>
+                      <td className="room-price room-price-hl">{room.hlValue}</td>
+                      <td className="room-notes">{room.note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
         <div className="results-section glass-card">
           <h3 className="section-title">📊 Factor-by-Factor Breakdown</h3>
           <div className="factor-table-wrap">

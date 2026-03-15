@@ -7,10 +7,36 @@ You must return your analysis as a **valid JSON object** with the following exac
 {
   "hlPrice": "extracted HomeLane total price as string, e.g. ₹18,50,000",
   "compPrice": "extracted competitor total price as string",
-  "priceDiffPercent": number (positive = HL is higher, negative = HL is lower, e.g. 8.5 means HL is 8.5% higher),
+  "priceDiffPercent": number (positive = HL is higher, negative = HL is lower),
   "verdict": "HL_HIGHER" | "HL_LOWER" | "HL_EQUAL",
-  "verdictTitle": "one-line summary, e.g. HomeLane is 8.5% more expensive",
+  "verdictTitle": "one-line summary",
   "verdictSub": "2-3 sentence explanation of the key reason for the difference",
+  "hlBreakdown": {
+    "baseQuote": "string",
+    "designFee": "string",
+    "discount": "string",
+    "tax": "string",
+    "validity": "string",
+    "scope": "string",
+    "kitchen": "string"
+  },
+  "compBreakdown": {
+    "baseQuote": "string",
+    "designFee": "string",
+    "discount": "string",
+    "tax": "string",
+    "validity": "string",
+    "scope": "string",
+    "kitchen": "string"
+  },
+  "rooms": [
+    {
+      "name": "Room Name, e.g. Master Bedroom",
+      "hlValue": "HL Price for this room",
+      "compValue": "Competitor Price for this room",
+      "note": "detailed 'why' — size diff, module diff, quality, or extra products"
+    }
+  ],
   "factors": [
     {
       "name": "Factor name, e.g. Modular Kitchen",
