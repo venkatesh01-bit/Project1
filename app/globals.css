@@ -4,38 +4,38 @@
    ============================================================ */
 
 :root {
-  /* Color Palette */
-  --bg-base: #080c14;
-  --bg-surface: #0d1422;
-  --bg-card: rgba(255, 255, 255, 0.04);
-  --bg-card-hover: rgba(255, 255, 255, 0.07);
-  --bg-glass: rgba(13, 20, 34, 0.85);
+  /* Color Palette - Light Theme */
+  --bg-base: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --bg-glass: rgba(255, 255, 255, 0.85);
 
   /* Brand Colors */
-  --gold: #e8c46a;
-  --gold-light: #f5d98a;
-  --gold-dim: rgba(232, 196, 106, 0.15);
-  --hl-blue: #3b82f6;
-  --hl-blue-glow: rgba(59, 130, 246, 0.25);
+  --gold: #d97706; /* Darker amber for contrast */
+  --gold-light: #f59e0b;
+  --gold-dim: rgba(217, 119, 6, 0.1);
+  --hl-blue: #2563eb;
+  --hl-blue-glow: rgba(37, 99, 235, 0.15);
 
   /* Status Colors */
-  --green: #22c55e;
-  --green-dim: rgba(34, 197, 94, 0.15);
-  --red: #ef4444;
-  --red-dim: rgba(239, 68, 68, 0.15);
-  --amber: #f59e0b;
-  --amber-dim: rgba(245, 158, 11, 0.15);
+  --green: #16a34a;
+  --green-dim: rgba(22, 163, 74, 0.1);
+  --red: #dc2626;
+  --red-dim: rgba(220, 38, 38, 0.1);
+  --amber: #d97706;
+  --amber-dim: rgba(217, 119, 6, 0.1);
 
   /* Text */
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #4b5563;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
   --text-gold: var(--gold);
 
   /* Borders */
-  --border: rgba(255, 255, 255, 0.08);
-  --border-gold: rgba(232, 196, 106, 0.3);
-  --border-active: rgba(232, 196, 106, 0.6);
+  --border: rgba(0, 0, 0, 0.1);
+  --border-gold: rgba(217, 119, 6, 0.3);
+  --border-active: rgba(217, 119, 6, 0.6);
 
   /* Radius */
   --radius-sm: 8px;
@@ -44,9 +44,9 @@
   --radius-xl: 28px;
 
   /* Shadows */
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
-  --shadow-gold: 0 0 30px rgba(232, 196, 106, 0.15);
-  --shadow-blue: 0 0 30px rgba(59, 130, 246, 0.2);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-gold: 0 0 20px rgba(217, 119, 6, 0.15);
+  --shadow-blue: 0 0 20px rgba(37, 99, 235, 0.15);
 
   /* Transitions */
   --t-fast: 0.15s ease;
@@ -62,6 +62,10 @@ html { scroll-behavior: smooth; }
 body {
   font-family: 'Inter', system-ui, sans-serif;
   background: var(--bg-base);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(217, 119, 6, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 50%);
+  background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
@@ -86,7 +90,7 @@ a:hover { text-decoration: underline; }
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(8, 12, 20, 0.95);
+  background: rgba(248, 250, 252, 0.85);
   backdrop-filter: blur(12px);
 }
 
@@ -345,7 +349,7 @@ a:hover { text-decoration: underline; }
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 1.8rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #f1f5f9 0%, var(--gold) 100%);
+  background: linear-gradient(135deg, #0f172a 0%, var(--gold) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -464,7 +468,7 @@ a:hover { text-decoration: underline; }
   flex-direction: column;
   gap: 1rem;
   border-top: 1px solid var(--border);
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.02);
 }
 
 .settings-hint {
@@ -541,7 +545,7 @@ a:hover { text-decoration: underline; }
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: clamp(2.5rem, 6vw, 3.5rem);
   font-weight: 800;
-  background: linear-gradient(135deg, #f1f5f9 20%, var(--gold) 100%);
+  background: linear-gradient(135deg, #0f172a 20%, var(--gold) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -739,7 +743,7 @@ a:hover { text-decoration: underline; }
 /* Toggle Group */
 .toggle-group {
   display: flex;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.05);
   border-radius: var(--radius-sm);
   padding: 3px;
   gap: 2px;
@@ -780,7 +784,7 @@ a:hover { text-decoration: underline; }
 }
 
 .form-input {
-  background: rgba(0,0,0,0.3);
+  background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0.75rem 1rem;
@@ -800,7 +804,7 @@ a:hover { text-decoration: underline; }
 
 .form-input::placeholder { color: var(--text-muted); }
 
-.form-input option { background: #1a2030; }
+.form-input option { background: #ffffff; }
 
 .form-hint {
   font-size: 0.78rem;
@@ -858,11 +862,11 @@ a:hover { text-decoration: underline; }
   align-items: center;
   gap: 10px;
   padding: 0.75rem 1rem;
-  background: rgba(34,197,94,0.06);
-  border: 1px solid rgba(34,197,94,0.2);
+  background: rgba(22, 163, 74, 0.06);
+  border: 1px solid rgba(22, 163, 74, 0.2);
   border-radius: var(--radius-sm);
   font-size: 0.875rem;
-  color: #86efac;
+  color: #16a34a;
   font-weight: 500;
 }
 
@@ -962,8 +966,8 @@ a:hover { text-decoration: underline; }
 }
 
 .step-item.done {
-  color: #86efac;
-  border-color: rgba(34,197,94,0.25);
+  color: #16a34a;
+  border-color: rgba(22, 163, 74, 0.25);
   background: var(--green-dim);
 }
 
@@ -983,7 +987,7 @@ a:hover { text-decoration: underline; }
 }
 
 .step-item.done .step-dot {
-  background: #22c55e;
+  background: #16a34a;
 }
 
 @keyframes dotPulse {
@@ -1159,7 +1163,7 @@ table.factor-table {
 
 .factor-table td {
   padding: 0.875rem 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
   vertical-align: top;
   line-height: 1.5;
 }
@@ -1175,7 +1179,7 @@ table.factor-table {
 .advantage-hl {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #86efac;
+  color: #16a34a;
   background: var(--green-dim);
   padding: 2px 8px;
   border-radius: 999px;
@@ -1185,7 +1189,7 @@ table.factor-table {
 .advantage-comp {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #fca5a5;
+  color: #dc2626;
   background: var(--red-dim);
   padding: 2px 8px;
   border-radius: 999px;
@@ -1195,7 +1199,7 @@ table.factor-table {
 .advantage-equal {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #fcd34d;
+  color: #d97706;
   background: var(--amber-dim);
   padding: 2px 8px;
   border-radius: 999px;
@@ -1216,7 +1220,7 @@ table.factor-table {
   padding: 1rem 1.25rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.02);
   transition: all var(--t-fast);
 }
 .rec-item:hover { border-color: var(--border-gold); }
@@ -1419,15 +1423,15 @@ table.factor-table {
   top: 80px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(13, 20, 34, 0.95);
-  border: 1px solid var(--border-gold);
-  color: var(--gold);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-md);
   font-weight: 600;
   font-size: 0.9rem;
   z-index: 9999;
-  box-shadow: var(--shadow-gold);
+  box-shadow: var(--shadow-card);
   backdrop-filter: blur(16px);
   animation: fadeIn 0.2s ease;
 }
