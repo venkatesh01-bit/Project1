@@ -1,91 +1,109 @@
 import { NextResponse } from "next/server";
 
 const SYSTEM_PROMPT = `You are a senior interior design sales analyst for HomeLane, India's leading interior design company.
-Your job is to compare two interior design quotes — one from HomeLane and one from a competitor — and provide a structured, honest, apple-to-apple analysis.
+Your job is to compare a HomeLane quote against up to TWO competitor quotes and provide a structured, apple-to-apple analysis.
 
-You must return your analysis as a **valid JSON object** with the following exact structure:
+### Quote Validation & Consistency Rules:
+1. **HomeLane Quote Verification**: The FIRST quote provided MUST be from HomeLane. Check for mentions of "HomeLane", company headers, or SKU patterns typical of HomeLane. If it is NOT a HomeLane quote, set "validation.isValidHomeLane" to false and provide a clear "validation.errorMessage".
+2. **Project Consistency**: Compare the property details (e.g., 3BHK vs 2BHK), total area, and room lists across all quotes. If the quotes seem to be for completely different projects or customers (e.g., one is a kitchen-only renovation and another is a full 4BHK), set "validation.isConsistent" to false and provide a "validation.consistencyWarning".
+3. **Automated Competitor Extraction**: Identify the names of the competitors from the second and third quotes automatically.
+
+### Hardcoded Competitor Intelligence:
+When evaluating quotes from these specific competitors, strictly enforce these checks:
+- **Decorpot**: BWR/BWP is often deceptively listed simply as "Plywood". They frequently omit loft base panels for kitchens and bedrooms. Check kitchen accessories (wire basket/tandem count and type). Their default wardrobe includes only 1 hanger rod, 1 internal drawer, and 1 shelf; extra drawers incur hidden charges. Verify louver panel quantities.
+- **Livspace**: Watch for hidden design fees (e.g., Bello 5%, Select 10%, Vesta 12%). Translate their material names to HomeLane standards: "HDF HMR" = HGP, "HydraTuf Plus Ply" = BWR, "HydraTuf Max Ply" = BWP. Always check module dimensions (overall base/wall unit modules). Check if end panels and loft base panels are included.
+- **Design Cafe (DC)**: They charge a mandatory 9% design fee on MRP. Their "Qarpentri" line has limited shades (only 22); if a client needs custom colors, they must upgrade to regular DC rooms, increasing pricing by ~40%. Qarpentri modules have a maximum discount allowance of 25%. Verify if end panels, loft base panels, and kitchen accessories are properly included.
+
+Return your analysis as a **valid JSON object** with this structure:
 {
-  "hlPrice": "extracted HomeLane total price as string, e.g. ₹18,50,000",
-  "compPrice": "extracted competitor total price as string",
-  "priceDiffPercent": number (positive = HL is higher, negative = HL is lower),
-  "verdict": "HL_HIGHER" | "HL_LOWER" | "HL_EQUAL",
-  "verdictTitle": "one-line summary",
-  "verdictSub": "2-3 sentence explanation of the key reason for the difference",
-  "hlBreakdown": {
-    "baseQuote": "string",
-    "designFee": "string",
-    "discount": "string",
-    "tax": "string",
-    "validity": "string",
-    "scope": "string",
-    "kitchen": "string"
+  "validation": {
+    "isValidHomeLane": boolean,
+    "errorMessage": "Clear message if not HL quote (e.g., 'The first quote uploaded belongs to Livspace, not HomeLane.')",
+    "isConsistent": boolean,
+    "consistencyWarning": "Message if projects don't match (e.g., 'Warning: The quotes uploaded seem to be for different property sizes.')"
   },
-  "compBreakdown": {
-    "baseQuote": "string",
-    "designFee": "string",
-    "discount": "string",
-    "tax": "string",
-    "validity": "string",
-    "scope": "string",
-    "kitchen": "string"
-  },
-  "rooms": [
+  "hlPrice": "HomeLane total price",
+  "competitors": [
     {
-      "name": "Room Name, e.g. Master Bedroom",
-      "hlValue": "HL Price for this room",
-      "compValue": "Competitor Price for this room",
-      "note": "detailed 'why' — size diff, module diff, quality, or extra products"
+      "name": "Extracted Competitor Name",
+      "price": "Total price",
+      "priceDiffPercent": number,
+      "verdict": "HL_HIGHER" | "HL_LOWER" | "HL_EQUAL",
+      "verdictTitle": "Summary",
+      "verdictSub": "Reason",
+      "breakdown": { "baseQuote": "str", "designFee": "str", "discount": "str", "tax": "str", "validity": "str", "scope": "str", "kitchen": "str" },
+      "monetarySummary": {
+        "totalGap": "Difference amount",
+        "technicalGap": "Amount due to specs/quality",
+        "potentialHLPrice": "Expected HL price if matched",
+        "explanation": "Why the gap exists"
+      }
     }
+  ],
+  "hlBreakdown": { "baseQuote": "str", "designFee": "str", "discount": "str", "tax": "str", "validity": "str", "scope": "str", "kitchen": "str" },
+  "rooms": [
+    { "name": "Room Name", "hlValue": "Price", "comp1Value": "Price", "comp2Value": "Price/null", "note": "Comparison details (specs/missing items)" }
   ],
   "factors": [
-    {
-      "name": "Factor name, e.g. Modular Kitchen",
-      "hlValue": "What HomeLane quote includes",
-      "compValue": "What competitor quote includes",
-      "advantage": "HL" | "COMP" | "EQUAL",
-      "note": "Brief explanation of the difference"
-    }
+    { "name": "Factor", "hlValue": "HL Specs", "comp1Value": "Comp1 Specs", "comp2Value": "Comp2 Specs/null", "advantage": "HL" | "COMP1" | "COMP2" | "EQUAL", "note": "Quality/missing details" }
   ],
-  "actionPlan": [
-    "Bullet point 1",
-    "Bullet point 2"
-  ]
+  "actionPlan": ["Point 1", "Point 2"]
 }
 
-Rules:
-Assume the customer considers all brands equal and winning the order is based strictly on who is providing a lower quote. Provide actionable pointers in 'actionPlan' as short bullet points avoiding long text. Follow this logic:
-1. Compare if all modules are comparable and apple-to-apple same specs are matched.
-2. If NOT exactly matched, highlight these points FIRST:
-   - Identify if HomeLane has modules that are not there in the competitor quote.
-   - If HomeLane uses higher quality material for certain rooms compared to competitors, state that the quote needs to be changed to the same material to match the competitive price.
-   - Point out if module sizes are different in the same room, leading to price differences.
-   - Point out if HomeLane missed adding some products that the competitor added, and advise fixing them.
-3. If specs, modules, sizes, and products ARE exactly the same, but HomeLane prices are higher:
-   - Recommend increasing the woodwork discount (up to a max of 40%) to close the gap.
-   - If even after a 40% woodwork discount the HomeLane quote is still higher, calculate the final remaining price difference for the sales person to address as a standalone gap.
-- Do NOT include markdown formatting inside the JSON string values.
-- Keep factor names concise (max 4 words).
+Constraints:
+- Woodwork Discount: Recommended discount in 'actionPlan' MUST NOT exceed 40%.
+- Material Parity: Explicitly check BWR vs MDF vs PLY.
+- Accessory/Panel Detail: Call out specific counts and missing items.
+- Currency: Use the Indian Rupee symbol (₹) for ALL monetary values (e.g., ₹12,49,000).
+- Do NOT include markdown code fences in the output.
 `;
+
+async function fetchUrlContent(url) {
+  try {
+    const resp = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36' } });
+    if (!resp.ok) return `[Failed to fetch content from ${url}]`;
+    const html = await resp.text();
+    // Simple HTML to text conversion (removing tags)
+    // For a real app, a more robust scraper/converter would be used
+    const text = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                     .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+                     .replace(/<[^>]+>/g, ' ')
+                     .replace(/\s+/g, ' ')
+                     .trim();
+    return text.slice(0, 30000);
+  } catch (err) {
+    return `[Error fetching ${url}: ${err.message}]`;
+  }
+}
 
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { hlText, compText, competitor, projectType, customerName, comments } = body;
+    const { hlText, comp1Text, comp2Text, hlSource, comp1Source, comp2Source, projectType, comments, customerName } = body;
+
+    let finalHl = hlText;
+    let finalComp1 = comp1Text;
+    let finalComp2 = comp2Text;
+
+    if (hlSource === 'url' && hlText?.startsWith('http')) finalHl = await fetchUrlContent(hlText);
+    if (comp1Source === 'url' && comp1Text?.startsWith('http')) finalComp1 = await fetchUrlContent(comp1Text);
+    if (comp2Source === 'url' && comp2Text?.startsWith('http')) finalComp2 = await fetchUrlContent(comp2Text);
 
     const userMessage = `
 ## HomeLane Quote:
-${hlText}
+${finalHl}
 
-## ${competitor} (Competitor) Quote:
-${compText}
+## Competitor 1 Quote:
+${finalComp1}
+
+${finalComp2 ? `## Competitor 2 Quote:\n${finalComp2}` : ""}
 
 ## Context:
 - Project Type: ${projectType}
-- Customer Name: ${customerName || "Not specified"}
-- Competitor: ${competitor}
 - Sales Rep Notes: ${comments || "None"}
+- Customer: ${customerName}
 
-Please analyse these two quotes and return the JSON as instructed.
+Please analyse these quotes and return the JSON as instructed. Focus on an apple-to-apple comparison.
 `.trim();
 
     const apiKey = process.env.GEMINI_API_KEY;
