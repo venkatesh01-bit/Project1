@@ -8,6 +8,11 @@ Your job is to compare a HomeLane quote against up to TWO competitor quotes and 
 2. **Project Consistency**: Compare the property details (e.g., 3BHK vs 2BHK), total area, and room lists across all quotes. If the quotes seem to be for completely different projects or customers (e.g., one is a kitchen-only renovation and another is a full 4BHK), set "validation.isConsistent" to false and provide a "validation.consistencyWarning".
 3. **Automated Competitor Extraction**: Identify the names of the competitors from the second and third quotes automatically.
 
+### Data Isolation Policy (CRITICAL):
+- **Document Integrity**: You are provided with multiple documents. You MUST treat them as independent data sources.
+- **No Data Bleed**: Never copy values (especially monetary amounts) from one quote to another. If a value (like Design Fee) is explicitly present in the HomeLane quote but missing in the Competitor quote, leave it as null or "-" in the competitor breakdown. DO NOT assume numbers are the same.
+- **Direct Extraction**: Look for the specific "Total" or "Grand Total" in each of the `<quote>` tags separately.
+
 ### Hardcoded Competitor Intelligence:
 When evaluating quotes from these specific competitors, strictly enforce these checks:
 - **Decorpot**: BWR/BWP is often deceptively listed simply as "Plywood". They frequently omit loft base panels for kitchens and bedrooms. Check kitchen accessories (wire basket/tandem count and type). Their default wardrobe includes only 1 hanger rod, 1 internal drawer, and 1 shelf; extra drawers incur hidden charges. Verify louver panel quantities.
@@ -90,13 +95,15 @@ export async function POST(request) {
     if (comp2Source === 'url' && comp2Text?.startsWith('http')) finalComp2 = await fetchUrlContent(comp2Text);
 
     const userMessage = `
-## HomeLane Quote:
+<homelane_quote>
 ${finalHl}
+</homelane_quote>
 
-## Competitor 1 Quote:
+<competitor_1_quote>
 ${finalComp1}
+</competitor_1_quote>
 
-${finalComp2 ? `## Competitor 2 Quote:\n${finalComp2}` : ""}
+${finalComp2 ? `<competitor_2_quote>\n${finalComp2}\n</competitor_2_quote>` : ""}
 
 ## Context:
 - Project Type: ${projectType}
