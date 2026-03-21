@@ -118,7 +118,7 @@ Please analyse these documents and return the JSON as instructed. Focus on an ap
       return NextResponse.json({ error: "Gemini API key is not configured on the server." }, { status: 500 });
     }
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
     
     const geminiBody = {
       systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
