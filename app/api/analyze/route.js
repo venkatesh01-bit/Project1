@@ -118,7 +118,7 @@ Please analyse these quotes and return the JSON as instructed. Focus on an apple
       return NextResponse.json({ error: "Gemini API key is not configured on the server." }, { status: 500 });
     }
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
     
     const geminiBody = {
       systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
@@ -138,8 +138,12 @@ Please analyse these quotes and return the JSON as instructed. Focus on an apple
 
     if (!resp.ok) {
       const errData = await resp.json().catch(() => ({}));
+      const msg = errData?.error?.message || resp.statusText;
+      if (resp.status === 429) {
+        return NextResponse.json({ error: "AI Capacity Reached. The free-tier API quota has been exceeded. Please wait about 60 seconds before trying again.", isQuotaError: true }, { status: 429 });
+      }
       return NextResponse.json(
-        { error: `Gemini API error: ${errData?.error?.message || resp.statusText}` },
+        { error: `Gemini API error: ${msg}` },
         { status: resp.status }
       );
     }
