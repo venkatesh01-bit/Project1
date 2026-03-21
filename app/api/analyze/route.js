@@ -1,20 +1,20 @@
 import { NextResponse } from "next/server";
 
 const SYSTEM_PROMPT = `You are a senior interior design sales analyst for HomeLane, India's leading interior design company.
-Your job is to compare a HomeLane quote against up to TWO competitor quotes and provide a structured, apple-to-apple analysis.
+Your job is to compare a HomeLane document against up to TWO competitor documents and provide a structured, apple-to-apple analysis.
 
 ### Quote Validation & Consistency Rules:
-1. **HomeLane Quote Verification**: The FIRST quote provided MUST be from HomeLane. Check for mentions of "HomeLane", company headers, or SKU patterns typical of HomeLane. If it is NOT a HomeLane quote, set "validation.isValidHomeLane" to false and provide a clear "validation.errorMessage".
-2. **Project Consistency**: Compare the property details (e.g., 3BHK vs 2BHK), total area, and room lists across all quotes. If the quotes seem to be for completely different projects or customers (e.g., one is a kitchen-only renovation and another is a full 4BHK), set "validation.isConsistent" to false and provide a "validation.consistencyWarning".
-3. **Automated Competitor Extraction**: Identify the names of the competitors from the second and third quotes automatically.
+1. **HomeLane Quote Verification**: The FIRST document provided MUST be from HomeLane. Check for mentions of "HomeLane", company headers, or SKU patterns typical of HomeLane. If it is NOT a HomeLane document, set "validation.isValidHomeLane" to false and provide a clear "validation.errorMessage".
+2. **Project Consistency**: Compare the property details (e.g., 3BHK vs 2BHK), total area, and room lists across all documents. If the documents seem to be for completely different projects or customers (e.g., one is a kitchen-only renovation and another is a full 4BHK), set "validation.isConsistent" to false and provide a "validation.consistencyWarning".
+3. **Automated Competitor Extraction**: Identify the names of the competitors from the second and third documents automatically.
 
 ### Data Isolation Policy (CRITICAL):
 - **Document Integrity**: You are provided with multiple documents. You MUST treat them as independent data sources.
-- **No Data Bleed**: Never copy values (especially monetary amounts) from one quote to another. If a value (like Design Fee) is explicitly present in the HomeLane quote but missing in the Competitor quote, leave it as null or "-" in the competitor breakdown. DO NOT assume numbers are the same.
-- **Direct Extraction**: Look for the specific "Total" or "Grand Total" in each of the `<quote>` tags separately.
+- **No Data Bleed**: Never copy values (especially monetary amounts) from one document to another. If a value (like Design Fee) is explicitly present in the HomeLane document but missing in the Competitor document, leave it as null or "-" in the competitor breakdown. DO NOT assume numbers are the same.
+- **Direct Extraction**: Look for the specific "Total" or "Grand Total" in each of the [document_tags] separately.
 
 ### Hardcoded Competitor Intelligence:
-When evaluating quotes from these specific competitors, strictly enforce these checks:
+When evaluating documents from these specific competitors, strictly enforce these checks:
 - **Decorpot**: BWR/BWP is often deceptively listed simply as "Plywood". They frequently omit loft base panels for kitchens and bedrooms. Check kitchen accessories (wire basket/tandem count and type). Their default wardrobe includes only 1 hanger rod, 1 internal drawer, and 1 shelf; extra drawers incur hidden charges. Verify louver panel quantities.
 - **Livspace**: Watch for hidden design fees (e.g., Bello 5%, Select 10%, Vesta 12%). Translate their material names to HomeLane standards: "HDF HMR" = HGP, "HydraTuf Plus Ply" = BWR, "HydraTuf Max Ply" = BWP. Always check module dimensions (overall base/wall unit modules). Check if end panels and loft base panels are included.
 - **Design Cafe (DC)**: They charge a mandatory 9% design fee on MRP. Their "Qarpentri" line has limited shades (only 22); if a client needs custom colors, they must upgrade to regular DC rooms, increasing pricing by ~40%. Qarpentri modules have a maximum discount allowance of 25%. Verify if end panels, loft base panels, and kitchen accessories are properly included.
@@ -23,9 +23,9 @@ Return your analysis as a **valid JSON object** with this structure:
 {
   "validation": {
     "isValidHomeLane": boolean,
-    "errorMessage": "Clear message if not HL quote (e.g., 'The first quote uploaded belongs to Livspace, not HomeLane.')",
+    "errorMessage": "Clear message if not HL document (e.g., 'The first document uploaded belongs to Livspace, not HomeLane.')",
     "isConsistent": boolean,
-    "consistencyWarning": "Message if projects don't match (e.g., 'Warning: The quotes uploaded seem to be for different property sizes.')"
+    "consistencyWarning": "Message if projects don't match (e.g., 'Warning: The documents uploaded seem to be for different property sizes.')"
   },
   "hlPrice": "HomeLane total price",
   "competitors": [
@@ -95,22 +95,22 @@ export async function POST(request) {
     if (comp2Source === 'url' && comp2Text?.startsWith('http')) finalComp2 = await fetchUrlContent(comp2Text);
 
     const userMessage = `
-<homelane_quote>
+[HOMELANE_QUOTE]
 ${finalHl}
-</homelane_quote>
+[/HOMELANE_QUOTE]
 
-<competitor_1_quote>
+[COMPETITOR_1_QUOTE]
 ${finalComp1}
-</competitor_1_quote>
+[/COMPETITOR_1_QUOTE]
 
-${finalComp2 ? `<competitor_2_quote>\n${finalComp2}\n</competitor_2_quote>` : ""}
+${finalComp2 ? `[COMPETITOR_2_QUOTE]\n${finalComp2}\n[/COMPETITOR_2_QUOTE]` : ""}
 
 ## Context:
 - Project Type: ${projectType}
 - Sales Rep Notes: ${comments || "None"}
 - Customer: ${customerName}
 
-Please analyse these quotes and return the JSON as instructed. Focus on an apple-to-apple comparison.
+Please analyse these documents and return the JSON as instructed. Focus on an apple-to-apple comparison.
 `.trim();
 
     const apiKey = process.env.GEMINI_API_KEY;
