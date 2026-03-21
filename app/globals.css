@@ -2255,3 +2255,41 @@ table.factor-table {
     gap: 1rem;
   }
 }
+
+/* ============================================================
+   PDF EXPORT STYLES (html2canvas targeting)
+   ============================================================ */
+.export-mode {
+  width: 1200px !important;
+  max-width: 1200px !important;
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  margin: 0 !important;
+  padding: 2rem !important;
+  box-shadow: none !important;
+}
+
+.export-mode .glass-card,
+.export-mode .breakdown-card,
+.export-mode .results-section {
+  background: #ffffff !important;
+  box-shadow: none !important;
+  border: 1px solid #e5e7eb !important;
+  page-break-inside: avoid;
+}
+
+.export-mode .no-print,
+.export-mode .navbar {
+  display: none !important;
+}
+
+.export-mode .pdf-only-header {
+  display: block !important;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 1rem;
+}
+
+.pdf-only-header {
+  display: none;
+}

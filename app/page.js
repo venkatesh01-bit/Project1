@@ -2,6 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import * as pdfjsLib from "pdfjs-dist/build/pdf";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
@@ -27,7 +30,8 @@ export default function ComparePage() {
         const params = new URLSearchParams(window.location.search);
         const encoded = params.get("result");
         if (encoded) {
-          const binary = atob(encoded);
+          const safeEncoded = encoded.replace(/ /g, '+');
+          const binary = atob(safeEncoded);
           const bytes = new Uint8Array(binary.length);
           for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
           
@@ -425,7 +429,7 @@ function ResultsView({ result, onBack, onNew }) {
       const response = new Response(stream);
       const buffer = await response.arrayBuffer();
       const binary = String.fromCharCode(...new Uint8Array(buffer));
-      const encoded = btoa(binary);
+      const encoded = encodeURIComponent(btoa(binary));
       const longUrl = `${window.location.origin}${window.location.pathname}?result=${encoded}`;
       const shortenResp = await fetch("/api/shorten", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: longUrl }) });
       const { shortUrl, error } = await shortenResp.json();
@@ -438,6 +442,68 @@ function ResultsView({ result, onBack, onNew }) {
       setTimeout(() => setToast(""), 3000);
     }
   };
+
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+
+  const generatePDF = async () => {
+    setIsGeneratingPDF(true);
+    setToast("⏳ Generating Premium Report...");
+    
+    // Allow React/DOM to settle before capture
+    await new Promise(r => setTimeout(r, 500));
+    
+    const element = document.getElementById('pdf-report-container');
+    if (!element) {
+      setIsGeneratingPDF(false);
+      return;
+    }
+
+    element.classList.add('export-mode');
+
+    try {
+      const canvas = await html2canvas(element, {
+        scale: 2, 
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#FFFFFF',
+        windowWidth: 1200 // Force standard width for PDF
+      });
+      
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      let heightLeft = pdfHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+      heightLeft -= pdf.internal.pageSize.getHeight();
+
+      while (heightLeft > 0) {
+        position = heightLeft - pdfHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+        heightLeft -= pdf.internal.pageSize.getHeight();
+      }
+
+      pdf.save(`Intelligence_Report_${new Date().getTime()}.pdf`);
+      setToast("✅ PDF Downloaded!");
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      setToast("❌ Failed to generate PDF.");
+    } finally {
+      element.classList.remove('export-mode');
+      setTimeout(() => setToast(""), 3000);
+      setIsGeneratingPDF(false);
+    }
+  };
+
+
 
   return (
     <div className="page active light-theme">
@@ -453,13 +519,20 @@ function ResultsView({ result, onBack, onNew }) {
         </div>
         <div className="nav-right">
           <button className="btn btn-secondary hungry-outline" onClick={handleShare}>🔗 Share</button>
-          <button className="btn btn-secondary hungry-outline" onClick={() => window.print()}>⬇️ Download PDF</button>
-          <button className="btn btn-primary hungry-btn no-print" onClick={onNew}>New Comparison</button>
+          <button className="btn btn-primary hungry-btn" onClick={generatePDF} disabled={isGeneratingPDF}>{isGeneratingPDF ? '⏳ Processing...' : '⬇️ Download Premium PDF'}</button>
+          <button className="btn btn-secondary hungry-outline no-print" onClick={onNew}>New Comparison</button>
         </div>
       </nav>
       {toast && <div className="share-toast">{toast}</div>}
 
-      <main className="main-content results-main">
+      <main className="main-content results-main" id="pdf-report-container">
+        
+        {/* PDF Header (Only visible in PDF) */}
+        <div className="pdf-only-header">
+           <h1 style={{margin:0, color:'var(--primary)'}}>HomeLane Intelligence Report</h1>
+           <p style={{margin:0, color:'var(--text-secondary)'}}>Generated on {new Date().toLocaleDateString()}</p>
+        </div>
+
         {result.validation && !result.validation.isValidHomeLane && (
           <div className="validation-error-card glass-card">
             <div className="ve-icon">❌</div>
@@ -519,7 +592,8 @@ function ResultsView({ result, onBack, onNew }) {
               </div>
             ))}
 
-            <div className="summary-row">
+
+            <div className="summary-row" style={{marginTop: '2rem'}}>
               <div className="summary-card glass-card">
                 <div className="sc-label">HomeLane Price</div>
                 <div className="sc-value">{result.hlPrice}</div>
@@ -533,9 +607,9 @@ function ResultsView({ result, onBack, onNew }) {
             </div>
 
             <div className="breakdown-grid" style={{display: 'grid', gridTemplateColumns: `repeat(${comps.length + 1}, 1fr)`, gap: '1.5rem', marginBottom: '2rem'}}>
-               <BreakdownCard title="HomeLane" data={result.hlBreakdown} isHL={true} />
+               <BreakdownCard title="HomeLane" data={result.hlBreakdown} isHL={true} rooms={result.rooms} providerKey="hlValue" />
                {comps.map((c, idx) => (
-                 <BreakdownCard key={idx} title={c.name} data={c.breakdown} />
+                 <BreakdownCard key={idx} title={c.name} data={c.breakdown} rooms={result.rooms} providerKey={idx === 0 ? 'comp1Value' : 'comp2Value'} />
                ))}
             </div>
 
@@ -700,8 +774,24 @@ function ResultsView({ result, onBack, onNew }) {
   );
 }
 
-function BreakdownCard({ title, data, isHL }) {
+function BreakdownCard({ title, data, isHL, rooms, providerKey }) {
   if (!data) return null;
+
+  const parseCurrency = (val) => {
+    if (!val) return 0;
+    return Number(String(val).replace(/[^0-9.-]+/g,""));
+  };
+
+  const COLORS = ['#3b82f6', '#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316'];
+  const pieData = (rooms || []).map((room, i) => {
+    const val = parseCurrency(room[providerKey]);
+    return {
+      name: room.name,
+      value: val,
+      fill: COLORS[i % COLORS.length]
+    };
+  }).filter(d => d.value > 0);
+
   return (
     <div className="breakdown-card glass-card">
       <div className="breakdown-header">
@@ -724,6 +814,19 @@ function BreakdownCard({ title, data, isHL }) {
           </div>
         ))}
       </div>
+      {pieData.length > 0 && (
+        <div style={{height: 160, width: '100%', marginTop: '1rem'}} className="no-print-hide-svg">
+          <ResponsiveContainer>
+            <PieChart>
+               <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={35} outerRadius={60} stroke="none" label={({percent}) => percent > 0.05 ? `${(percent * 100).toFixed(0)}%` : ''}>
+                 {pieData.map((entry, index) => <Cell key={`cell-card-${index}`} fill={entry.fill} />)}
+               </Pie>
+               <Tooltip formatter={(value) => `₹ ${value.toLocaleString()}`} />
+               <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{fontSize: '11px'}} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      )}
     </div>
   );
 }
