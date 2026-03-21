@@ -539,6 +539,92 @@ function ResultsView({ result, onBack, onNew }) {
                ))}
             </div>
 
+            {result.additionalScope && result.additionalScope.length > 0 && (
+              <div className="results-section glass-card" style={{borderColor: 'var(--primary)'}}>
+                <h3 className="section-title">✨ Additional Scope by HomeLane</h3>
+                <p style={{fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1rem'}}>Items explicitly included in the HomeLane quote that competitors missed or charged extra for.</p>
+                <div className="additional-scope-grid" style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem'}}>
+                  {result.additionalScope.map((item, i) => (
+                    <div key={i} className="scope-item" style={{background: 'var(--surface)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border)'}}>
+                      <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem'}}>
+                        <strong>{item.item}</strong>
+                        <span className="scope-cost" style={{color: 'var(--primary)', fontWeight: 'bold'}}>{item.costImpact}</span>
+                      </div>
+                      <p className="scope-note" style={{fontSize: '0.85rem', color: 'var(--text-secondary)', margin: 0}}>{item.note}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {result.kitchenAccessoriesSummary && (
+              <div className="results-section glass-card alert-bg" style={{background: 'rgba(255,179,0,0.05)', border: '1px solid rgba(255,179,0,0.3)'}}>
+                <h3 className="section-title">🍳 Kitchen Accessories Highlight</h3>
+                <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '1.05rem'}}>
+                  <strong>HomeLane: <span style={{color: 'var(--green)'}}>{result.kitchenAccessoriesSummary.hlCount}</span></strong>
+                  <span>{result.kitchenAccessoriesSummary.compNamesAndCounts}</span>
+                </div>
+                <p style={{fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0}}>{result.kitchenAccessoriesSummary.costImpactNote}</p>
+              </div>
+            )}
+
+            {comps.map((c, idx) => (
+              <div key={`deep-dive-${idx}`}>
+                {c.decorpotSqftAnalysis && (
+                  <div className="results-section glass-card" style={{background: 'linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(249,250,251,1) 100%)', border: '1px solid #d1d5db'}}>
+                    <h3 className="section-title">📐 Decorpot SqFt Analysis</h3>
+                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', background: '#fff', padding: '1rem', borderRadius: '8px', border: '1px dashed #ccc'}}>
+                      <div><span style={{color:'var(--text-secondary)', fontSize:'0.85rem', display:'block'}}>HomeLane Approx Area</span><strong style={{fontSize:'1.1rem'}}>{c.decorpotSqftAnalysis.hlApproxSqft}</strong></div>
+                      <div><span style={{color:'var(--text-secondary)', fontSize:'0.85rem', display:'block'}}>Decorpot Quoted Area</span><strong style={{fontSize:'1.1rem'}}>{c.decorpotSqftAnalysis.dpSqft}</strong></div>
+                    </div>
+                    <p style={{marginTop: '0.75rem', fontSize: '0.85rem', color: 'var(--text-secondary)'}}>{c.decorpotSqftAnalysis.note}</p>
+                  </div>
+                )}
+
+                {c.moduleComparison && c.moduleComparison.length > 0 && (
+                  <div className="results-section glass-card">
+                    <h3 className="section-title">📏 Module Dimensions vs {c.name}</h3>
+                    <div className="factor-table-wrap">
+                      <table className="factor-table">
+                        <thead>
+                          <tr>
+                            <th>Module Component</th>
+                            <th>HomeLane Specs</th>
+                            <th>{c.name} Specs</th>
+                            <th>Sales Impact</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {c.moduleComparison.map((m, i) => (
+                            <tr key={i}>
+                              <td style={{fontWeight: '500'}}>{m.moduleName}</td>
+                              <td style={{color: 'var(--text-primary)', fontWeight: '600'}}>{m.hlDimensions}</td>
+                              <td style={{color: 'var(--text-secondary)'}}>{m.compDimensions}</td>
+                              <td style={{fontSize: '0.85rem', color: 'var(--primary)'}}>{m.dimensionDifference}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {c.missingElementsValuation && c.missingElementsValuation.length > 0 && (
+                  <div className="results-section glass-card" style={{borderLeft: '4px solid #ef4444'}}>
+                    <h3 className="section-title" style={{color: '#ef4444'}}>⚠️ Hidden Costs: Missing Elements in {c.name}</h3>
+                    <ul style={{paddingLeft: '1.2rem', margin: 0, color: 'var(--text-secondary)'}}>
+                      {c.missingElementsValuation.map((m, i) => (
+                        <li key={i} style={{marginBottom: '0.5rem', lineHeight: '1.5'}}>
+                          <strong style={{color: 'var(--text-primary)'}}>{m.missingItem}</strong> <span style={{color: '#ef4444', fontWeight: 'bold'}}>(Est. Value: {m.estimatedValue})</span>
+                          <div style={{fontSize: '0.85rem', marginTop: '0.2rem'}}>{m.description}</div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))}
+
             {result.rooms && result.rooms.length > 0 && (
               <div className="results-section glass-card">
                 <h3 className="section-title">🏠 Room-by-Room Comparison</h3>

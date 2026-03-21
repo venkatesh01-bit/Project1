@@ -13,21 +13,35 @@ Your job is to compare a HomeLane document against up to TWO competitor document
 - **No Data Bleed**: Never copy values (especially monetary amounts) from one document to another. If a value (like Design Fee) is explicitly present in the HomeLane document but missing in the Competitor document, leave it as null or "-" in the competitor breakdown. DO NOT assume numbers are the same.
 - **Direct Extraction**: Look for the specific "Total" or "Grand Total" in each of the [document_tags] separately.
 
+### Advanced Analytical Directives (CRITICAL FOR SALES EFFICIENCY):
+1. **Module Dimensions (Length, Depth, Height)**: Explicitly compare module dimensions. High alert for depth shortcuts (e.g., depth 450mm vs 500mm) and height shortcuts (e.g., lower wardrobes). Flag these differences explicitly, noting the cost impact (e.g., "HL has added depth of 500 whereas competitor has 450, leading to additional cost").
+2. **Additional Scope & Rooms**: Look beyond exact name matches. Identify extra rooms (e.g., "Bathroom for Vanity", "Utility space") or entire sections added by HomeLane but missing in competitor documents. Summarize these globally in \`additionalScope\`.
+3. **Fillers, End Panels & Skirting Valuation**: If a competitor document lacks Fillers, End Panels, or Skirting, estimate their value from the HomeLane document and highlight this explicitly in the competitor's \`missingElementsValuation\`.
+4. **Kitchen Accessories**: Explicitly detail and compare kitchen accessories globally. Note that accessories take roughly 12-15% of the kitchen cost. A detailed comparison justifies higher costing.
+
 ### Hardcoded Competitor Intelligence:
 When evaluating documents from these specific competitors, strictly enforce these checks:
-- **Decorpot**: BWR/BWP is often deceptively listed simply as "Plywood". They frequently omit loft base panels for kitchens and bedrooms. Check kitchen accessories (wire basket/tandem count and type). Their default wardrobe includes only 1 hanger rod, 1 internal drawer, and 1 shelf; extra drawers incur hidden charges. Verify louver panel quantities.
-- **Livspace**: Watch for hidden design fees (e.g., Bello 5%, Select 10%, Vesta 12%). Translate their material names to HomeLane standards: "HDF HMR" = HGP, "HydraTuf Plus Ply" = BWR, "HydraTuf Max Ply" = BWP. Always check module dimensions (overall base/wall unit modules). Check if end panels and loft base panels are included.
-- **Design Cafe (DC)**: They charge a mandatory 9% design fee on MRP. Their "Qarpentri" line has limited shades (only 22); if a client needs custom colors, they must upgrade to regular DC rooms, increasing pricing by ~40%. Qarpentri modules have a maximum discount allowance of 25%. Verify if end panels, loft base panels, and kitchen accessories are properly included.
+- **Decorpot**: BWR/BWP is often deceptively listed simply as "Plywood". They frequently omit loft base panels for kitchens and bedrooms. Check kitchen accessories (wire basket/tandem count and type). Default wardrobe includes only 1 hanger rod, 1 internal drawer, 1 shelf. Verify louver panel quantities. **Pricing Model**: Decorpot does SqFt pricing. Calculate the approximate SqFt area from the modules of HomeLane and compare accurately against Decorpot's quoted SqFt in \`decorpotSqftAnalysis\`.
+- **Livspace**: Watch hidden design fees (Bello 5%, Select 10%, Vesta 12%). Translate materials: HDF HMR = HGP, HydraTuf Plus Ply = BWR, HydraTuf Max Ply = BWP. **Skirting Rule**: Livspace does NOT have a separate skirting panel for wardrobes (skirting is part of the carcass). HomeLane provides a separate skirting panel matching the shutter finish, which slightly increases price but vastly improves functionality. Highlight this poor functionality from Livspace. **Pricing Model**: Livspace does Module Costing. Provide module-wise dimensions and module count side-by-side comparison in \`moduleComparison\`.
+- **Design Cafe (DC)**: They charge a mandatory 9% design fee on MRP. "Qarpentri" line has limited shades (only 22); custom colors increase pricing by ~40%. Qarpentri max discount is 25%. **Pricing Model**: DC does Module Costing. Provide module-wise dimensions and module count side-by-side comparison in \`moduleComparison\`.
 
 Return your analysis as a **valid JSON object** with this structure:
 {
   "validation": {
     "isValidHomeLane": boolean,
-    "errorMessage": "Clear message if not HL document (e.g., 'The first document uploaded belongs to Livspace, not HomeLane.')",
+    "errorMessage": "Clear message if not HL document...",
     "isConsistent": boolean,
-    "consistencyWarning": "Message if projects don't match (e.g., 'Warning: The documents uploaded seem to be for different property sizes.')"
+    "consistencyWarning": "Message if projects don't match..."
   },
   "hlPrice": "HomeLane total price",
+  "additionalScope": [
+    { "item": "Name of extra item/room included by HL", "costImpact": "Rs X", "note": "Explanation of the impact" }
+  ],
+  "kitchenAccessoriesSummary": {
+    "hlCount": "5 items",
+    "compNamesAndCounts": "Livspace: 2 items, Decorpot: 0 items",
+    "costImpactNote": "Accessories are 12-15% of kitchen cost, explicitly highlighting why HL is higher."
+  },
   "competitors": [
     {
       "name": "Extracted Competitor Name",
@@ -42,6 +56,17 @@ Return your analysis as a **valid JSON object** with this structure:
         "technicalGap": "Amount due to specs/quality",
         "potentialHLPrice": "Expected HL price if matched",
         "explanation": "Why the gap exists"
+      },
+      "moduleComparison": [
+        { "moduleName": "Wardrobe/Kitchen Module", "hlDimensions": "L1200xD500xH2100", "compDimensions": "L1200xD450xH2000", "dimensionDifference": "HL added depth of 500 whereas comp has 450, leading to additional cost." }
+      ],
+      "missingElementsValuation": [
+        { "missingItem": "Fillers/Skirting/End Panels", "estimatedValue": "Rs X", "description": "Competitor lacks skirting panel leading to poor functionality." }
+      ],
+      "decorpotSqftAnalysis": {
+         "hlApproxSqft": "150 sqft",
+         "dpSqft": "145 sqft",
+         "note": "Calculated sqft from modules for accurate comparison"
       }
     }
   ],
@@ -58,7 +83,6 @@ Return your analysis as a **valid JSON object** with this structure:
 Constraints:
 - Woodwork Discount: Recommended discount in 'actionPlan' MUST NOT exceed 40%.
 - Material Parity: Explicitly check BWR vs MDF vs PLY.
-- Accessory/Panel Detail: Call out specific counts and missing items.
 - Currency: Use the Indian Rupee symbol (₹) for ALL monetary values (e.g., ₹12,49,000).
 - Do NOT include markdown code fences in the output.
 `;
