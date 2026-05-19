@@ -2,6 +2,7 @@
 .next/
 node_modules/
 .env.local
+.env
 *.log
 raw_response.json
 test_api.js
