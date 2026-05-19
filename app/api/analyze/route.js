@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import prisma from "../../../lib/prisma";
 
 const SYSTEM_PROMPT = `You are a senior interior design sales analyst for HomeLane, India's leading interior design company.
 Your job is to compare a HomeLane document against up to TWO competitor documents and provide a structured, apple-to-apple analysis.
@@ -209,6 +210,21 @@ Please analyse these documents and return the JSON as instructed. Focus on an ap
         console.error("No JSON object found in AI response.");
         return NextResponse.json({ error: "AI returned invalid JSON format." }, { status: 500 });
       }
+    }
+
+    // Persist to Database (Neon/PostgreSQL)
+    try {
+      await prisma.comparison.create({
+        data: {
+          customerName: customerName || "Unknown",
+          projectType: projectType || "Unknown",
+          hlPrice: resultJson.hlPrice || "₹ 0",
+          resultJson: resultJson
+        }
+      });
+    } catch (dbErr) {
+      console.error("Database save failed:", dbErr);
+      // We don't fail the entire request if DB save fails, but we should log it
     }
 
     return NextResponse.json(resultJson);

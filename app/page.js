@@ -644,7 +644,7 @@ function ResultsView({ result, onBack, onNew }) {
 
             {comps.map((c, idx) => (
               <div key={`deep-dive-${idx}`}>
-                {c.decorpotSqftAnalysis && (
+                {c.decorpotSqftAnalysis && c.name && c.name.toLowerCase().includes('decorpot') && (
                   <div className="results-section glass-card" style={{background: 'linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(249,250,251,1) 100%)', border: '1px solid #d1d5db'}}>
                     <h3 className="section-title">📐 Decorpot SqFt Analysis</h3>
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', background: '#fff', padding: '1rem', borderRadius: '8px', border: '1px dashed #ccc'}}>
