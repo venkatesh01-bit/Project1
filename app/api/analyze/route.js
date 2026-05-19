@@ -110,21 +110,73 @@ Constraints:
 
 async function fetchUrlContent(url) {
   try {
-    const resp = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36' } });
+    const resp = await fetch(url, { 
+      headers: { 
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9'
+      } 
+    });
     if (!resp.ok) return `[Failed to fetch content from ${url}]`;
     const html = await resp.text();
-    // Simple HTML to text conversion (removing tags)
-    // For a real app, a more robust scraper/converter would be used
-    const text = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-                     .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
-                     .replace(/<[^>]+>/g, ' ')
-                     .replace(/\s+/g, ' ')
-                     .trim();
-    return text.slice(0, 30000);
+    
+    let extractedData = "";
+
+    // 1. Try to extract Next.js __NEXT_DATA__ state which usually has the full API payloads
+    const nextDataRegex = /<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/i;
+    const nextDataMatch = html.match(nextDataRegex);
+    if (nextDataMatch && nextDataMatch[1]) {
+      try {
+        const parsed = JSON.parse(nextDataMatch[1].trim());
+        extractedData += "\n[Extracted Next.js Page Data]\n" + JSON.stringify(parsed, null, 2) + "\n";
+      } catch (e) {
+        // Skip malformed JSON
+      }
+    }
+
+    // 2. Try to extract other script tags containing state objects (like window.__INITIAL_STATE__ etc)
+    const genericScriptRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gi;
+    let match;
+    while ((match = genericScriptRegex.exec(html)) !== null) {
+      const scriptContent = match[1].trim();
+      if (!scriptContent) continue;
+      
+      const contentLower = scriptContent.toLowerCase();
+      if (
+        contentLower.includes("quote") || 
+        contentLower.includes("price") || 
+        contentLower.includes("discount") || 
+        contentLower.includes("carcass") || 
+        contentLower.includes("shutter")
+      ) {
+        // Look for JSON object patterns within the script
+        const jsonMatch = scriptContent.match(/(\{[\s\S]*?\})/);
+        if (jsonMatch) {
+          try {
+            const parsed = JSON.parse(jsonMatch[1]);
+            extractedData += "\n[Extracted Script State Data]\n" + JSON.stringify(parsed, null, 2) + "\n";
+          } catch (e) {
+            extractedData += "\n[Extracted Script Raw Code]\n" + scriptContent.slice(0, 3000) + "\n";
+          }
+        } else {
+          extractedData += "\n[Extracted Script Raw Code]\n" + scriptContent.slice(0, 3000) + "\n";
+        }
+      }
+    }
+
+    // 3. Simple HTML to text conversion (removing tags) for plain visible text
+    const textBody = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                         .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+                         .replace(/<[^>]+>/g, ' ')
+                         .replace(/\s+/g, ' ')
+                         .trim();
+    
+    return (textBody + "\n" + extractedData).slice(0, 50000);
   } catch (err) {
     return `[Error fetching ${url}: ${err.message}]`;
   }
 }
+
 
 export async function POST(request) {
   try {

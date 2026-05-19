@@ -171,14 +171,17 @@ function CompareForm({ onBack, onComplete }) {
 
   const [hlFile, setHlFile] = useState(null);
   const [hlUrl, setHlUrl] = useState("");
-  const [hlSource, setHlSource] = useState("pdf"); // 'pdf' or 'url'
+  const [hlRawText, setHlRawText] = useState("");
+  const [hlSource, setHlSource] = useState("pdf"); // 'pdf', 'url', or 'text'
 
   const [comp1File, setComp1File] = useState(null);
   const [comp1Url, setComp1Url] = useState("");
+  const [comp1RawText, setComp1RawText] = useState("");
   const [comp1Source, setComp1Source] = useState("pdf");
 
   const [comp2File, setComp2File] = useState(null);
   const [comp2Url, setComp2Url] = useState("");
+  const [comp2RawText, setComp2RawText] = useState("");
   const [comp2Source, setComp2Source] = useState("pdf");
 
   const [isAnalysing, setIsAnalysing] = useState(false);
@@ -218,16 +221,21 @@ function CompareForm({ onBack, onComplete }) {
     // Validation
     if (hlSource === 'pdf' && !hlFile) return setError("Please upload the HomeLane quote PDF.");
     if (hlSource === 'url' && !hlUrl) return setError("Please provide the HomeLane quote Weblink.");
+    if (hlSource === 'text' && !hlRawText) return setError("Please paste the HomeLane quote text.");
+    
     if (comp1Source === 'pdf' && !comp1File) return setError("Please upload the 1st competitor quote PDF.");
     if (comp1Source === 'url' && !comp1Url) return setError("Please provide the 1st competitor quote Weblink.");
+    if (comp1Source === 'text' && !comp1RawText) return setError("Please paste the 1st competitor quote text.");
 
     setIsAnalysing(true);
     const interval = setInterval(() => setStep(s => s < 2 ? s + 1 : s), 3000);
 
     try {
-      const hlData = hlSource === 'pdf' ? await extractTextFromPDF(hlFile) : hlUrl;
-      const comp1Data = comp1Source === 'pdf' ? await extractTextFromPDF(comp1File) : comp1Url;
-      const comp2Data = comp2Source === 'pdf' ? (comp2File ? await extractTextFromPDF(comp2File) : null) : (comp2Url || null);
+      const hlData = hlSource === 'pdf' ? await extractTextFromPDF(hlFile) : (hlSource === 'url' ? hlUrl : hlRawText);
+      const comp1Data = comp1Source === 'pdf' ? await extractTextFromPDF(comp1File) : (comp1Source === 'url' ? comp1Url : comp1RawText);
+      const comp2Data = comp2Source === 'pdf' 
+        ? (comp2File ? await extractTextFromPDF(comp2File) : null) 
+        : (comp2Source === 'url' ? (comp2Url || null) : (comp2RawText || null));
 
       const res = await fetch("/api/analyze", {
         method: "POST",
@@ -288,7 +296,7 @@ function CompareForm({ onBack, onComplete }) {
     );
   }
 
-  const renderQuoteSection = (id, label, source, setSource, file, setFile, url, setUrl, isOptional = false) => {
+  const renderQuoteSection = (id, label, source, setSource, file, setFile, url, setUrl, rawText, setRawText, isOptional = false) => {
     const isHL = id === 'hl';
     const icon = isHL ? '🏆' : '⚔️';
     return (
@@ -299,8 +307,9 @@ function CompareForm({ onBack, onComplete }) {
             <h3 className="fieldset-title">{label} {isOptional && <span className="optional-tag">Optional</span>}</h3>
           </div>
           <div className="segmented-control">
-            <button type="button" className={`seg-btn ${source === 'pdf' ? 'active' : ''}`} onClick={() => setSource('pdf')}>Upload PDF</button>
-            <button type="button" className={`seg-btn ${source === 'url' ? 'active' : ''}`} onClick={() => setSource('url')}>Weblink</button>
+            <button type="button" className={`seg-btn ${source === 'pdf' ? 'active' : ''}`} onClick={() => setSource('pdf')}>PDF</button>
+            <button type="button" className={`seg-btn ${source === 'url' ? 'active' : ''}`} onClick={() => setSource('url')}>Link</button>
+            <button type="button" className={`seg-btn ${source === 'text' ? 'active' : ''}`} onClick={() => setSource('text')}>Paste BOQ</button>
           </div>
         </div>
         
@@ -313,7 +322,7 @@ function CompareForm({ onBack, onComplete }) {
                 <span className="upl-text">{file ? file.name : "Click to select PDF"}</span>
               </label>
             </div>
-          ) : (
+          ) : source === 'url' ? (
             <div className="uniform-input-group">
               <span className="inp-prefix">🔗</span>
               <input 
@@ -322,6 +331,26 @@ function CompareForm({ onBack, onComplete }) {
                 placeholder="https://..." 
                 value={url} 
                 onChange={e => setUrl(e.target.value)} 
+              />
+            </div>
+          ) : (
+            <div className="uniform-input-group" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+              <textarea 
+                className="uniform-input" 
+                placeholder="Paste the quote specifications, items, pricing, or full page text here..." 
+                rows={4}
+                value={rawText} 
+                onChange={e => setRawText(e.target.value)} 
+                style={{ 
+                  resize: 'vertical', 
+                  minHeight: '100px', 
+                  padding: '0.6rem 0.8rem', 
+                  fontFamily: 'inherit', 
+                  fontSize: '0.85rem',
+                  lineHeight: '1.4',
+                  width: '100%',
+                  borderRadius: '8px'
+                }}
               />
             </div>
           )}
@@ -384,9 +413,9 @@ function CompareForm({ onBack, onComplete }) {
               </div>
             </div>
 
-            {renderQuoteSection('hl', 'HomeLane Quote', hlSource, setHlSource, hlFile, setHlFile, hlUrl, setHlUrl)}
-            {renderQuoteSection('comp1', 'Competitor Quote I', comp1Source, setComp1Source, comp1File, setComp1File, comp1Url, setComp1Url)}
-            {renderQuoteSection('comp2', 'Competitor Quote II', comp2Source, setComp2Source, comp2File, setComp2File, comp2Url, setComp2Url, true)}
+            {renderQuoteSection('hl', 'HomeLane Quote', hlSource, setHlSource, hlFile, setHlFile, hlUrl, setHlUrl, hlRawText, setHlRawText)}
+            {renderQuoteSection('comp1', 'Competitor Quote I', comp1Source, setComp1Source, comp1File, setComp1File, comp1Url, setComp1Url, comp1RawText, setComp1RawText)}
+            {renderQuoteSection('comp2', 'Competitor Quote II', comp2Source, setComp2Source, comp2File, setComp2File, comp2Url, setComp2Url, comp2RawText, setComp2RawText, true)}
 
             <div className="compare-fieldset borderless">
               <div className="fieldset-header rich-header">
