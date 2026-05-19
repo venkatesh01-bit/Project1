@@ -26,6 +26,23 @@ When evaluating documents from these specific competitors, strictly enforce thes
 - **Livspace**: Watch hidden design fees (Bello 5%, Select 10%, Vesta 12%). Translate materials: HDF HMR = HGP, HydraTuf Plus Ply = BWR, HydraTuf Max Ply = BWP. **Skirting Rule**: Livspace does NOT have a separate skirting panel for wardrobes (skirting is part of the carcass). HomeLane provides a separate skirting panel matching the shutter finish, which slightly increases price but vastly improves functionality. Highlight this poor functionality from Livspace. **Pricing Model**: Livspace does Module Costing. Provide module-wise dimensions and module count side-by-side comparison in \`moduleComparison\`.
 - **Design Cafe (DC)**: They charge a mandatory 9% design fee on MRP. "Qarpentri" line has limited shades (only 22); custom colors increase pricing by ~40%. Qarpentri max discount is 25%. **Pricing Model**: DC does Module Costing. Provide module-wise dimensions and module count side-by-side comparison in \`moduleComparison\`.
 
+### HomeLane Quote Optimization Rules (Category Team Guidelines):
+Analyze the HomeLane quote and identify opportunities to optimize the design/specifications to lower HomeLane's price and win the deal. Suggest up to 3 high-impact optimizations from the following categories if applicable, and return them in `hlOptimisations` array:
+1. **Fitted Furniture (Modular)**:
+   - **Construction Type**: Hinged/Sliding/Floor-to-Ceiling Wardrobes, Entertainment/Crockery/Foyer Units, Suspended/Floor Standing Vanity Units can be optimized by 10% by changing construction to "Fusion" (except Fillers, Shelves, Countertops, Skirting, Panels, Lofts). Note that Cabinet Material is a % of product cost (e.g., Room Divider: 5% Cab / 95% Shutter, Entertainment/Crockery/Foyer/Hinged: 76% Cab / 24% Shutter, Sliding: 35% Cab / 65% Shutter).
+   - **Cabinet Material**: BWP Ply (100%) > Hydroguard Plus HDF (85%) > Prelam BWR / Prelam Comply (75%) > Prelam Hydroguard Plus-HDF (66%) > Prelam AQS MDF-Clr-BSL / Prelam AQS MDF-R / AQS-MDF-R (60%) > Prelam AQS MDF-R (49%). Suggest only up to 2 tiers down.
+   - **Shutter Finish/Core**: PU OSL > Membrane OSL > Acrylic OSL > Postlam > Prelam. (Membrane must be MDF core, Acrylic/PU must be HDHMR). Aluminium Glass Shutter can be optimized to 19mm Alu Profile (saves 10%). Suggest up to 3 levels down.
+2. **Painting**:
+   - Built-Up Area to Carpet Area = 75%. Painting quantity (sft) = 3 * Carpet Area (if no False Ceiling or with Paint SKU). If False Ceiling without Paint SKU: 3 * Carpet Area + FC Area.
+   - Quality Tiers: Royale (100%) > Apcolite (80%) > Tractor (70%).
+3. **Electrical**:
+   - Basic vs False Ceiling Electrical package based on City and Property Config (1BHK-4BHK). Select basic or false ceiling package depending on ceiling presence (e.g., Bangalore 2BHK Basic is ₹28,545, FC is ₹40,779; Chennai 3BHK Basic is ₹34,829, FC is ₹49,756).
+4. **False Ceiling**:
+   - Signature Gyproc Standard (100%) > Classic Knauf (90%) > Essential Knauf 0.3mm (65%).
+5. **Countertops**:
+   - Installation: With Backsplash + 40mm Nosing (100%) > Without Backsplash + 40mm Nosing (95%) > With Backsplash + 20mm Nosing (80%) > Without Backsplash + 20mm Nosing (75%).
+   - Material: Kalinga (100%) > Camrola or AGL (90%) > Granite (50%).
+
 Return your analysis as a **valid JSON object** with this structure:
 {
   "validation": {
@@ -78,7 +95,10 @@ Return your analysis as a **valid JSON object** with this structure:
   "factors": [
     { "name": "Factor", "hlValue": "HL Specs", "comp1Value": "Comp1 Specs", "comp2Value": "Comp2 Specs/null", "advantage": "HL" | "COMP1" | "COMP2" | "EQUAL", "note": "Quality/missing details" }
   ],
-  "actionPlan": ["Point 1", "Point 2"]
+  "actionPlan": ["Point 1", "Point 2"],
+  "hlOptimisations": [
+    { "category": "Modular / Painting / Electrical / False Ceiling / Countertop", "current": "Current Specification", "recommended": "Recommended Specification", "savings": "₹ X", "note": "Reasoning from the rulebook" }
+  ]
 }
 
 Constraints:

@@ -757,6 +757,41 @@ function ResultsView({ result, onBack, onNew }) {
               </div>
             </div>
 
+            {result.hlOptimisations && result.hlOptimisations.length > 0 && (
+              <div className="results-section glass-card" style={{borderLeft: '4px solid #eab308'}}>
+                <h3 className="section-title" style={{color: '#ca8a04', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                  💡 Category Team Optimization Recommendations
+                </h3>
+                <p style={{fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem'}}>
+                  Apply these rulebook guidelines to optimize your HomeLane proposal and offer a more competitive quotation.
+                </p>
+                <div className="factor-table-wrap">
+                  <table className="factor-table">
+                    <thead>
+                      <tr>
+                        <th>Category</th>
+                        <th>Current Design Spec</th>
+                        <th>Recommended Alternative</th>
+                        <th>Est. Savings</th>
+                        <th>Category Guidelines</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {result.hlOptimisations.map((opt, i) => (
+                        <tr key={i}>
+                          <td style={{fontWeight: '600', color: 'var(--text-primary)'}}>{opt.category}</td>
+                          <td style={{color: '#ef4444', textDecoration: 'line-through', fontSize: '0.85rem'}}>{opt.current}</td>
+                          <td style={{color: '#22c55e', fontWeight: '600', fontSize: '0.85rem'}}>{opt.recommended}</td>
+                          <td style={{color: '#22c55e', fontWeight: '700'}}>{opt.savings}</td>
+                          <td style={{fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: '1.4'}}>{opt.note}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
             {result.actionPlan && result.actionPlan.length > 0 && (
               <div className="results-section glass-card">
                 <h3 className="section-title">🎯 Actionable Sales Strategy</h3>

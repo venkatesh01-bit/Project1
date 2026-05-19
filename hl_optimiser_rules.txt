@@ -1,0 +1,791 @@
+
+=== PAGE 1 ===
+FITTED FURNITURE
+Fitted Furniture Optimization is broadly set in terms Construction Type, Cabinet Material, Shutter Core and Shutter Finish. With respect to Fitted Furniture, First set of Optimization should happen in terms of Construction Type, second in terms Cabinet Material Optimization, then third in terms
+Shutter Core and finally Shutter Finish. Rule sets for all four is set below.
+1.Construction Type
+The following Categories and Sub-Category under Fitted Furniture, the values can be optimized by 10% by changing the construction type to Fusion for all SKUs except for the following Fillers, Removable Shelf, Counter top, Skirting, Wall Panel, Wall Panel Frame, Exposed Panels, Loft Frame and
+Shutter and Wardrobe Loft Base Panel.
+The categories with Fusion alternatives are as follows:
+1. Storage | Entertainment Unit
+2. Storage | Crockery Unit
+3. Storage | Foyer Unit
+4. Wardrobe | Hinged
+5. Wardrobe | Sliding-Inset
+6. Wardrobe | Floor-to-Ceiling.
+7. Floor Standing Vanity Unit
+8. Suspended Vanity Unit
+2. Cabinet Material | Colour
+1.Price Tiering is as follows:
+BWP Ply > Hydrogaurd Plus HDF > Prelam BWR Ply or Prelam Comply > Aqua shield MDF-R or Prelam Hydrogaurd Plus-HDF > Prelam Aqua shield MDF-Clr-BSL or Prelam Hydrogaurd Plus-HDF or Aqua Shield-MDF-R or Prelam Aqua shield MDF-R.
+2. Below Table shows the pricing difference for Cabinet Material with different Core Material in terms of reduction from BWP Ply. Please suggest only upto two tiers down and not more than that. For example, if BWP Ply is 100, Hydrogaurd plus HDF is (.85*100), likewise Prelam BWR Ply/ Prelam
+Comply is (.75*100) from BWP Ply and .89 of Hydrogaurd Plus HDF.
+Prelam Aqua shield
+MDF-Clr-BSL/ Prelam
+Aqua shield MDF-R/ Hydrogaurd Plus-
+Hydrogaurd Plus Prelam BWR Ply/ Prelam Prelam Hydrogaurd HDF/ Aqua Shield- Prelam Aqua shield
+BWP Ply HDF Comply Plus-HDF MDF-R MDF-R
+100% 85% 75% 66% 60% 49%
+3. Below Table will show the availability of the Cabinat Material based on the Room Type, Category and Sub-category under Fitted Furniture. If any Core material is disabled, We can skip suggesting it for the particular sub-category but need to two tiers down by skipping the disabled option.
+Construction
+Cabinet Material Type
+Prelam Aqua shield
+MDF-FW-BSL/ Prelam
+Aqua shield MDF-Clr-
+Aqua shield MDF-R/ BSL/ Prelam
+Prelam BWR Ply/ Hydrogaurd Plus- Prelam Hydrogaurd Hydrogaurd Plus- Prelam Aqua shield Fusion-
+Room Type Category Sub Categories BWP Ply Prelam Comply HDF Plus-HDF HDF MDF-R Yes/No
+Living Room Storage Room Divider
+Living Room Storage ModuCurve
+Living Room Storage Study Unit
+Living Room Storage Floor Standing Vanity Unit
+Living Room Storage Suspended Vanity Unit
+Living Room Storage Entertainment Unit
+Living Room Storage Crockery Unit
+Living Room Storage Bar Unit
+Living Room Storage Pooja Unit
+Living Room Storage Foyer Unit
+Bedroom Wardrobe Versa Hinge Wardrobe
+Bedroom Wardrobe Composite Floor-to-Ceiling
+Bedroom Wardrobe Hinged
+Bedroom Wardrobe Versa Floor-to-Ceiling
+Bedroom Wardrobe Sliding-Inset
+Bedroom Wardrobe Sliding-Overlay
+Bedroom Wardrobe Floor-to-Ceiling
+Bedroom Storio F-Entertainment Unit
+Bedroom Storio F-Sliding-Inset Wardrobe
+Bedroom Storio F-Hinged Wardrobe
+Bedroom Loft Box Loft
+Bedroom Loft Frame and Shutter
+Bedroom Miscelleneous Book Shelf
+Bedroom Miscelleneous Bedside Table
+Bedroom Miscelleneous Chest of Drawer
+Bedroom Miscelleneous Space Saving
+Bedroom Miscelleneous Seating Option
+Bedroom Miscelleneous Wall Decor
+Bedroom Miscelleneous Wall Panelling
+Bedroom Miscelleneous Partition System
+Bedroom Miscelleneous Wall Mirror
+
+=== PAGE 2 ===
+Bathroom Storage Floor Standing Vanity Unit
+Bathroom Storage Suspended Vanity Unit
+Bathroom Storage Vanity Concepts
+Bathroom Loft Box Loft
+Bathroom Loft Frame and Shutter
+Kitchen Floor Standing Storage
+Kitchen Floor Standing Corner
+Kitchen Floor Standing Blind Corner unit
+Kitchen Floor Standing Cooking
+Kitchen Floor Standing Tall
+Kitchen Floor Standing Breakfast Counter
+Kitchen Floor Standing Cleaning
+Kitchen Floor Standing L-Shaped
+Kitchen Floor Standing Washing
+Kitchen Suspended Cooking
+Kitchen Suspended Washing
+Kitchen Semi-Modular Storage
+Kitchen Semi-Modular Corner
+Kitchen Semi-Modular Cooking
+Kitchen Semi-Modular Washing
+Kitchen Loft Box Loft
+Kitchen Loft Frame and Shutter
+Kitchen Storage Pooja Unit
+Kitchen Miscelleneous Partition System
+3. Shutter Finish & Core | Colour
+1. Under Shutter Finish & Core, First Optimize for Colour within the same Finish. Please suggest optimization through alternatives which are less priced. Second Range of suggestions would be to optimize different finishes based on the price tiering as follows:
+PU OSL > Membrane OSL > Acrylic OSL > Postlam > Prelam.
+2. Price difference can be picked from Coloumn "Percentage of Price difference from Max" based on the Pricing Group. For Example, Pricing Group 1
+is .17 times Pricing Group 15. Please suggest alternatives two upto 3 levels down.
+3. Number of shades available can be shown as visibility for designers.
+Shutter Options Use Percentage of Price
+Case Class Descripition BSP Shades Available Pricing Group difference from Max
+Shutter Prelam MDF Prelam Aqua Sheild-MDF-Clr-BSL Solid Ma1tt5 o7n Prelam Aqua Shield2-M8DF-Clr-BSL
+Pricing Group 1 17%
+Shutter Prelam MDF Prelam Aqua Sheild-MDF-Clr-BSL Wooden1 G6r0ain Matt on Prelam Aq1u3a Shield-MDF-Clr-BSL
+Shutter Prelam HDF Prelam Hydrogaurd Plus-HDF Solid Suede 2o0n5 Prelam Hydrogaurd Pl5us-HDF
+Pricing Group 2 24%
+Shutter Prelam HDF Prelam Hydrogaurd Plus-HDF Wood Grains2 3S0uede on Prelam Hydrog8aurd Plus-HDF
+Shutter Postlam AQS Laminate Solid Suede on Aqua Shield-MDF2-6R5 38
+Shutter Postlam AQS Laminate Solid Soft Touch on Aqua Shield-M26D5F-R 2
+Shutter Postlam AQS Laminate Solid Textured on Aqua Shield-MD26F5-R 2
+Shutter Postlam AQS Laminate Wood Grains Suede on Aqua Shi2e6ld5-MDF-R 19
+Shutter Postlam AQS Laminate Print Textured on Aqua Shield-MD2F8-4R 7
+Shutter Postlam AQS Laminate Stone Textured on Aqua Shield-M2D8F4-R 1
+Pricing Group 3 30%
+Shutter Postlam AQS Laminate Wood Grains Textured on Aqua S2h8ie4ld-MDF-R 14
+Shutter Postlam HGP Laminate Solid Suede on Hydrogaurd Plus 2H9D8F 38
+Shutter Postlam HGP Laminate Solid Soft Touch on Hydrogaurd P2l9u8s HDF 2
+Shutter Postlam HGP Laminate Solid Textured on Hydrogaurd Plu2s9 H8DF 2
+Shutter Postlam HGP Laminate Wood Grains Suede on Hydrogau2r9d8 Plus HDF 19
+Shutter Postlam AQS Laminate Marble HD on Aqua Shield-MDF-R306 2
+Shutter Postlam AQS Laminate Solid Hi Gloss on Aqua Shield-MD3F06-R 29
+Shutter Postlam AQS Laminate Wood Grains Hi Gloss on Aqua S3h0ie6ld-MDF-R 5
+Shutter Postlam HGP Laminate Print Textured on Hydrogaurd Plu3s1 H7DF 7
+Shutter Postlam HGP Laminate Stone Textured on Hydrogaurd Pl3u1s7 HDF 1
+Shutter Postlam HGP Laminate Wood Grains Textured on Hydrog3a1u7rd Plus HDF 14
+Shutter Postlam BWP Laminate Solid Suede on BWP Ply 322 38
+Shutter Postlam BWP Laminate Solid Soft Touch on BWP Ply 322 2
+Shutter Postlam BWP Laminate Solid Textured on BWP Ply 322 2
+Shutter Postlam BWP Laminate Wood Grains Suede on BWP Ply322 19
+Shutter Postlam HGP Laminate Marble HD on Hydrogaurd Plus H3D3F9 2
+Pricing Group 4 35%
+Shutter Postlam HGP Laminate Solid Hi Gloss on Hydrogaurd Plu3s3 H9DF 29
+Shutter Postlam HGP Laminate Wood Grains Hi Gloss on Hydrog3a3u9rd Plus HDF 5
+Shutter Postlam BWP Laminate Print Textured on BWP Ply 341 7
+
+=== PAGE 3 ===
+Pricing Group 4 35%
+Shutter Postlam BWP Laminate Stone Textured on BWP Ply 341 1
+Shutter Postlam BWP Laminate Wood Grains Textured on BWP P3ly41 14
+Shutter Postlam AQS Laminate Anti Finger Print on Aqua Shield-M35D5F-R 5
+Shutter Postlam AQS Laminate Solid Hi Gloss-Thermo on Aqua S3h5ie5ld-MDF-R 5
+Shutter Postlam AQS Laminate Solid Suede-Thermo on Aqua Shi3e5ld5-MDF-R 14
+Shutter Postlam AQS Laminate Solid Textured-Thermo on Aqua S3h5i5eld-MDF-R 13
+Shutter Postlam AQS Laminate Wood Grains Suede-Thermo on A3q5u5a Shield-MDF-R 19
+Shutter Postlam BWP Laminate Marble HD on BWP Ply 363 2
+Shutter Postlam BWP Laminate Solid Hi Gloss on BWP Ply 363 29
+Shutter Postlam BWP Laminate Wood Grains Hi Gloss on BWP P3ly63 5
+Shutter Membrane 18mm Membrane Haveli - Origin Matt On MDF 379 12
+Shutter Membrane 18mm Membrane Haveli Jodi Matt On MDF 379 12
+Shutter Membrane 18mm Membrane Jharoka - Origin Matt On MDF379 12
+Shutter Membrane 18mm Membrane Plain Suede On MDF 387 12 Pricing Group 5 40%
+Shutter Postlam HGP Laminate Anti Finger Print on Hydrogaurd P3lu8s8 HDF 5
+Shutter Postlam HGP Laminate Solid Hi Gloss-Thermo on Hydrog3a8u8rd Plus HDF 5
+Shutter Postlam HGP Laminate Solid Suede-Thermo on Hydrogau38rd8 Plus HDF 14
+Shutter Postlam HGP Laminate Solid Textured-Thermo on Hydrog3a8u8rd Plus HDF 13
+Shutter Postlam HGP Laminate Wood Grains Suede-Thermo on H3y8d8rogaurd Plus HDF 15
+Shutter Membrane 22mm Membrane Plain Suede On MDF 397 12
+Shutter Membrane 18mm Membrane Boxit Duo Matt On MDF 405 11
+Shutter Membrane 18mm Membrane Plain Texture On MDF 409 10
+Shutter Postlam BWP Laminate Anti Finger Print on BWP Ply 412 5
+Shutter Postlam BWP Laminate Solid Hi Gloss-Thermo on BWP P4ly12 5
+Shutter Postlam BWP Laminate Solid Suede-Thermo on BWP Ply412 14 Pricing Group 6 46%
+Shutter Postlam BWP Laminate Solid Textured-Thermo on BWP P4l1y2 13
+Shutter Postlam BWP Laminate Wood Grains Suede-Thermo on B4W12P Ply 15
+Shutter Membrane 22mm Membrane Plain Texture On MDF 419 10
+Shutter Membrane 18mm Membrane Groove Suede On MDF 431 12
+Shutter Membrane 18mm Membrane Groove Texture On MDF 451 10
+Shutter Acrylic Acrylic OSL Solids Butter Matte on HDHMR4-5O5SL 3
+Shutter Acrylic Acrylic OSL Solids Ultra Gloss on HDHMR-4O5S5L 13
+Shutter Membrane 18mm Membrane Plain Hi Gloss On MDF 473 6
+Pricing Group 7 51%
+Shutter Membrane 18mm Membrane Routed Suede On MDF 473 12
+Shutter Membrane 18mm Membrane Routed Texture On MDF 473 10
+Shutter Membrane 22mm Membrane Plain Hi Gloss On MDF 483 6
+Shutter Postlam AQS Laminate Marble Matt on Aqua Shield-MDF4-R85 2
+Shutter Acrylic Acrylic OSL Solids Metallic on HDHMR-OS4L94 5
+Shutter Membrane 22mm Membrane Flutera Simple Matt On MDF 501 11
+Shutter Membrane 22mm Membrane Jharoka - Qube Matt On MDF 509 12 Pricing Group 8 55%
+Shutter Membrane 22mm Membrane Jharoka grid Matt On MDF 509 12
+Shutter Postlam HGP Laminate Marble Matt on Hydrogaurd Plus 5H1D8F 2
+Shutter Acrylic Acrylic OSL Solids Star Dust on HDHMR-O5S3L5 2
+Shutter Postlam BWP Laminate Marble Matt on Aqua Shield-BWP5 P42ly 2
+Shutter PU OSL-18 PU OSL-18 Plain Matt on Hydrogaurd Plus5-1583 23
+Shutter PU OSL-25 PU OSL-25 Plain Matt on Hydrogaurd Plus5-2553 23
+Shutter PU OSL-18 PU OSL-18 Flutera Origin Matt on Hydroga5u5r5d Plus-18 23
+Shutter PU OSL-25 PU OSL-25 Flutera Apex Matt on Hydrogau5r5d5 Plus-25 23 Pricing Group 9 60%
+Shutter PU OSL-25 PU OSL-25 Flutera Arch Matt on Hydrogau5r5d5 Plus-25 23
+Shutter PU OSL-25 PU OSL-25 Flutera Origin Matt on Hydroga5u5r5d Plus-25 23
+Shutter PU OSL-25 PU OSL-25 Flutera Plain Matt on Hydrogau5r5d5 Plus-25 23
+Shutter PU OSL-25 PU OSL-25 Luna - Horizontal Matt on Hydr5o5g5aurd Plus-25 23
+Shutter PU OSL-25 PU OSL-25 Luna - Vertical Matt on Hydrog5a5u5rd Plus-25 23
+Shutter PU OSL-18 PU OSL-18 Plain HGL on Hydrogaurd Plus6-1168 23
+Shutter PU OSL-25 PU OSL-25 Plain HGL on Hydrogaurd Plus6-1265 23
+Shutter Membrane 18mm Membrane Linea-H Plain Suede On MDF 628 12
+Pricing Group 10 68%
+Shutter Membrane 18mm Membrane Linea-V Plain Suede On MDF 628 12
+Shutter Membrane 18mm Membrane Oblique-Left Plain Suede On MD62F8 12
+Shutter Membrane 18mm Membrane Oblique-Right Plain Suede On M6D28F 12
+
+=== PAGE 4 ===
+Shutter PU OSL-18 PU OSL-18 Boxit Matt on Hydrogaurd Plus7-1080 23
+Shutter PU OSL-18 PU OSL-18 Grid With Glass Matt on Hydro7g0a0urd Plus-18 23
+Shutter PU OSL-18 PU OSL-18 Haveli - Origin Matt on Hydrog7a0u0rd Plus-18 23
+Shutter PU OSL-18 PU OSL-18 Strippy Matt on Hydrogaurd Pl7u0s-018 23
+Shutter PU OSL-25 PU OSL-25 Boxit Matt on Hydrogaurd Plus7-2050 23 Pricing Group 11 75%
+Shutter PU OSL-25 PU OSL-25 Strippy Matt on Hydrogaurd Pl7u0s-025 23
+Shutter PU OSL-18 PU OSL-18 Haveli plain Matt on Hydrogau7rd0 4Plus-18 23
+Shutter PU OSL-18 PU OSL-18 Jharoka - Origin Matt on Hydro7g0a4urd Plus-18 23
+Shutter PU OSL-25 PU OSL-25 Haveli plain Matt on Hydrogau7rd0 4Plus-25 23
+Shutter PU OSL-18 PU OSL-18 Floret-H Plain Matt on Hydroga7u3r0d Plus-18 23
+Shutter PU OSL-18 PU OSL-18 Floret-V Plain Matt on Hydroga7u3r0d Plus-18 23
+Shutter PU OSL-18 PU OSL-18 Linea-H Plain Matt on Hydroga7u3r0d Plus-18 23
+Shutter PU OSL-18 PU OSL-18 Linea-V Plain Matt on Hydroga7u3r0d Plus-18 23
+Pricing Group 12 78%
+Shutter PU OSL-18 PU OSL-18 Oblique-Left Plain Matt on Hyd7r3o0gaurd Plus-18 23
+Shutter PU OSL-18 PU OSL-18 Oblique-Right Plain Matt on Hy7d3r0ogaurd Plus-18 23
+Shutter PU OSL-18 PU OSL-18 Ovalis-H Plain Matt on Hydrog7a3u0rd Plus-18 23
+Shutter PU OSL-18 PU OSL-18 Ovalis-V Plain Matt on Hydrog7a3u0rd Plus-18 23
+Shutter PU OSL-25 PU OSL-25 Haveli - Origin Matt on Hydrog7a5u6rd Plus-25 23
+Shutter PU OSL-25 PU OSL-25 Arch With Groove Matt on Hyd7ro5g6aurd Plus-25 23
+Shutter PU OSL-25 PU OSL-25 Haveli classic Matt on Hydroga7u5r6d Plus-25 23
+Shutter PU OSL-25 PU OSL-25 Haveli Jodi Matt on Hydrogaur7d5 P6lus-25 23
+Shutter PU OSL-25 PU OSL-25 Jharoka - Classic Matt on Hydr7o5g6aurd Plus-25 23
+Shutter PU OSL-25 PU OSL-25 Jharoka - Origin Matt on Hydro7g5a6urd Plus-25 23
+Shutter PU OSL-25 PU OSL-25 Jharoka grid Matt on Hydrogau7r5d6 Plus-25 23 Pricing Group 13 82%
+Shutter PU OSL-25 PU OSL-25 Lino Matt on Hydrogaurd Plus-72556 23
+Shutter PU OSL-25 PU OSL-25 Aura - Horizontal Matt on Hydr7o6g1aurd Plus-25 23
+Shutter PU OSL-25 PU OSL-25 Aura - Vertical Matt on Hydroga7u6r1d Plus-25 23
+Shutter PU OSL-25 PU OSL-25 Flutera Classic Matt on Hydrog7a6u1rd Plus-25 23
+Shutter Membrane 18mm Membrane Floret-H Plain Suede On MDF 766 12
+Shutter Membrane 18mm Membrane Floret-V Plain Suede On MDF 766 12
+Shutter Membrane 18mm Membrane Flutera Origin Matt On MDF 830 11
+Shutter Membrane 18mm Membrane Flutera Plain Matt On MDF 830 11
+Shutter Membrane 18mm Membrane Haveli Classic Matt On MDF 830 12
+Pricing Group 14 89%
+Shutter Membrane 18mm Membrane Haveli Plain Matt On MDF 830 11
+Shutter Membrane 18mm Membrane Ovalis-H Plain Suede On MDF835 12
+Shutter Membrane 18mm Membrane Ovalis-V Plain Suede On MDF835 12
+Shutter Membrane 22mm Membrane Flutera Apex Matt On MDF 930 11
+Shutter Membrane 22mm Membrane Flutera Arch Matt On MDF 930 11
+Shutter Membrane 22mm Membrane Flutera Origin Matt On MDF 930 11
+Pricing group 15 100%
+Shutter Membrane 22mm Membrane Haveli Plain Matt On MDF 930 11
+Shutter Membrane 22mm Membrane Luna - Horizontal Matt On MDF930 11
+Shutter Membrane 22mm Membrane Luna - Vertical Matt On MDF 930 11
+Shutter Acrylic Acrylic OSL-Glassenza Glassenza Silk Ma1t,t0e41 7
+Shutter Acrylic Acrylic OSL-Glassenza Glassenza Luster 1G,0la4s1s 7
+Below Tables Maps finishes availability basis Category and Sub-Category under Fitted Furniture. Please suggest Optimization accordingly to availability of finishes.
+Shutter Core
+Prelam Prelam Aqua
+Hydrogaurd shield MDF-
+Room Type Category Sub Categories PU OSL-25 PU OSL-18 Acrylic Membrane 22mm Membrane 18mm Postlam BWP Postlam HGP Postlam AQS Plus-HDF Clr-BSL
+Living Room Storage Room Divider
+Living Room Storage ModuCurve
+Living Room Storage Study Unit
+Living Room Storage Floor Standing Vanity Unit
+Living Room Storage Suspended Vanity Unit
+Living Room Storage Entertainment Unit
+Living Room Storage Crockery Unit
+Living Room Storage Bar Unit
+Living Room Storage Pooja Unit
+Living Room Storage Foyer Unit
+Bedroom Wardrobe Versa Hinge Wardrobe
+
+=== PAGE 5 ===
+Bedroom Wardrobe Composite Floor-to-Ceiling
+Bedroom Wardrobe Hinged
+Bedroom Wardrobe Versa Floor-to-Ceiling
+Bedroom Wardrobe Sliding-Inset
+Bedroom Wardrobe Sliding-Overlay
+Bedroom Wardrobe Floor-to-Ceiling
+Bedroom Storio F-Entertainment Unit
+Bedroom Storio F-Sliding-Inset Wardrobe
+Bedroom Storio F-Hinged Wardrobe
+Bedroom Loft Box Loft
+Bedroom Loft Frame and Shutter
+Bedroom Miscelleneous Book Shelf
+Bedroom Miscelleneous Bedside Table
+Bedroom Miscelleneous Chest of Drawer
+Bedroom Miscelleneous Space Saving
+Bedroom Miscelleneous Seating Option
+Bedroom Miscelleneous Wall Decor
+Bedroom Miscelleneous Wall Panelling
+Bedroom Miscelleneous Partition System
+Bedroom Miscelleneous Wall Mirror
+Bathroom Storage Floor Standing Vanity Unit
+Bathroom Storage Suspended Vanity Unit
+Bathroom Storage Vanity Concepts
+Bathroom Loft Box Loft
+Bathroom Loft Frame and Shutter
+Kitchen Floor Standing Storage
+Kitchen Floor Standing Corner
+Kitchen Floor Standing Blind Corner unit
+Kitchen Floor Standing Cooking
+Kitchen Floor Standing Tall
+Kitchen Floor Standing Breakfast Counter
+Kitchen Floor Standing Cleaning
+Kitchen Floor Standing L-Shaped
+Kitchen Floor Standing Default
+Kitchen Floor Standing Washing
+Kitchen Suspended Cooking
+Kitchen Suspended Washing
+Kitchen Semi-Modular Storage
+Kitchen Semi-Modular Corner
+Kitchen Semi-Modular Cooking
+Kitchen Semi-Modular Washing
+Kitchen Loft Box Loft
+Kitchen Loft Frame and Shutter
+Kitchen Storage Pooja Unit
+Kitchen Miscelleneous Partition System
+2. Final set of suggestions should come for Shutter Finish. Please refer to the rule sets below and grid for Finish vs Core Material availability.
+a. If Shutter Finish mentions Membrane, the Core Material can only be MDF under Shutter Finish & Core.
+b. If Shutter Finish mentions Acrylic OSL, the Core Material can only be HDHMR under Shutter Finish & Core.
+c. If Shutter finish mentions PU OSL, the Core Material can only be HDHMR under Shutter Finish & Core.
+d. Please refer to the check box and ideally suggest basis that changes for Laminate.
+e. If Aluminium Glass Shutter is there on quote we can optimize to 19mm Alu Profile which will give us a savings of 10%.
+Finishes with Core Material
+Hydrogaurd Plus Aluminium Glass
+Finish MDF MDF-R HDHMR HDF BWP Ply Shutter 19mm Alu Profile
+Prelam
+Postlam
+Acrylic OSL
+Membrane
+PU OSL
+Below table has a percentage split of cost between Cabinet Material and Shutter. All the above inputs should take the percentage contribution from this. For Example, If Cabinet material, Percentage reduction for Room divider is 10% then the calculation is 10%*5%* Cost of Product from quote.
+Room Type Category Sub Categories Cabinet Material Shutter
+
+=== PAGE 6 ===
+Living Room Storage Room Divider 5% 95%
+Living Room Storage ModuCurve 67% 33%
+Living Room Storage Study Unit 42% 58%
+Living Room Storage Floor Standing Vanity Unit 83% 14%
+Living Room Storage Suspended Vanity Unit 83% 14%
+Living Room Storage Entertainment Unit 76% 24%
+Living Room Storage Crockery Unit 76% 24%
+Living Room Storage Bar Unit 76% 24%
+Living Room Storage Pooja Unit 76% 24%
+Living Room Storage Foyer Unit 76% 24%
+Bedroom Wardrobe Versa Hinge Wardrobe 76% 24%
+Bedroom Wardrobe Composite Floor-to-Ceiling 46% 54%
+Bedroom Wardrobe Hinged 76% 24%
+Bedroom Wardrobe Versa Floor-to-Ceiling 46% 54%
+Bedroom Wardrobe Sliding-Inset 35% 65%
+Bedroom Wardrobe Sliding-Overlay 35% 65%
+Bedroom Wardrobe Floor-to-Ceiling 46% 54%
+Bedroom Storio F-Entertainment Unit 92% 8%
+Bedroom Storio F-Sliding-Inset Wardrobe 35% 65%
+Bedroom Storio F-Hinged Wardrobe 78% 21%
+Bedroom Loft Box Loft 76% 24%
+Bedroom Loft Frame and Shutter 76% 24%
+Bedroom Miscelleneous Book Shelf 76% 24%
+Bedroom Miscelleneous Bedside Table 76% 24%
+Bedroom Miscelleneous Chest of Drawer 76% 24%
+Bedroom Miscelleneous Space Saving 46% 54%
+Bedroom Miscelleneous Seating Option 46% 54%
+Bedroom Miscelleneous Wall Decor 46% 54%
+Bedroom Miscelleneous Wall Panelling 38% 62%
+Bedroom Miscelleneous Partition System 5% 95%
+Bedroom Miscelleneous Wall Mirror 5% 95%
+Bathroom Storage Floor Standing Vanity Unit 35% 65%
+Bathroom Storage Suspended Vanity Unit 35% 65%
+Bathroom Storage Vanity Concepts 35% 65%
+Bathroom Loft Box Loft 76% 24%
+Bathroom Loft Frame and Shutter 76% 24%
+Kitchen Floor Standing Storage 38% 62%
+Kitchen Floor Standing Corner 43% 50%
+Kitchen Floor Standing Blind Corner unit 43% 50%
+Kitchen Floor Standing Cooking 43% 50%
+Kitchen Floor Standing Tall 43% 50%
+Kitchen Floor Standing Breakfast Counter 5% 95%
+Kitchen Floor Standing Cleaning 38% 62%
+Kitchen Floor Standing L-Shaped 43% 50%
+Kitchen Floor Standing Washing 38% 62%
+Kitchen Suspended Cooking 43% 50%
+Kitchen Suspended Washing 38% 62%
+Kitchen Semi-Modular Storage 38% 62%
+Kitchen Semi-Modular Corner 43% 50%
+Kitchen Semi-Modular Cooking 38% 62%
+Kitchen Semi-Modular Washing 76% 24%
+Kitchen Loft Box Loft 76% 24%
+Kitchen Loft Frame and Shutter 76% 24%
+Kitchen Storage Pooja Unit 46% 54%
+Kitchen Miscelleneous Partition System 5% 95%
+Appliances & Decor
+Under Appliances & Decor Category, Woodwork Lighting and HDS Lighting can be optimized with respect to brand. The Price Tiering is as follows:
+Philips > Wipro > Orient. The difference in pricing is as mentioned below.
+
+=== PAGE 7 ===
+Under Loose Furniture Category, the total value should not go past the AOV in the below grid with respect to City and Property Config. Suggestion to be to limit the Category value to the AOV as per below table. If the table, doesnt have the required details, Loose Furniture can be the same value and do
+not suggest optimization.
+City PROPERTY CONFIG LF AOV
+Bhubaneswar 2 BHK 129529
+Bengaluru 3 BHK 52354
+Bengaluru 2 BHK 27392
+Surat 3 BHK 86405
+Bhubaneswar 4 BHK 26985
+Pune 2 BHK 33822
+Ranchi 3 BHK 56581
+Bhubaneswar 3 BHK 80047
+Ranchi 2 BHK 23211
+Pune 1 BHK 29005
+Ranchi 1 BHK 43927
+Surat 2 BHK 59891
+Kolkata 3 BHK 61126
+Madurai 3 BHK 42558
+Patna 3 BHK 55400
+Noida 2 BHK 23561
+Mumbai 1 BHK 24593
+Visakhapatnam 3 BHK 105722
+Pune 3 BHK 45656
+Kolkata 2 BHK 59194
+Jaipur 3 BHK 40382
+Mysore 2 BHK 50970
+Kochi 4 BHK
+Coimbatore 2 BHK 78102
+Ghaziabad 3 BHK 56872
+Coimbatore 3 BHK 69799
+Bengaluru 4 BHK 51203
+Kochi 3 BHK 125106
+Gurgaon 3 BHK 69758
+Chennai 3 BHK 52769
+Kochi 1 BHK
+Noida 3 BHK 65428
+Hyderabad 2 BHK 57899
+Kolkata 4 BHK 56846
+Gurgaon 2 BHK 61424
+Hyderabad 3 BHK 64107
+Kolkata 1 BHK 33380
+New Delhi 3 BHK 51273
+Kolkata 3.5 BHk 39141
+Chennai 2 BHK 42261
+Ahmedabad 2 BHK 47330
+Ahmedabad 3 BHK 59076
+Bengaluru 1 BHK 39626
+Chandigarh 3 BHK 56664
+Mumbai 3 BHK 52200
+Pune No Data
+Mumbai 2 BHK 31603
+Nagpur 2 BHK 27782
+Ghaziabad 2 BHK
+Salem 3 BHK 49431
+Lucknow 1 BHK 21362
+Patna 2 BHK 92326
+Kochi 2 BHK 40033
+Trichy 2 BHK
+Nashik 3 BHK 50240
+Noida 4 BHK
+Pune 4 BHK 209572
+
+=== PAGE 8 ===
+Mumbai 2.5 BHK 19112
+Nagpur 1 BHK 25188
+Mysore 3 BHK 25709
+Thane 2 BHK 38636
+Nashik 2 BHK 54158
+Chennai 1 BHK 94944
+Nagpur 3 BHK 45064
+Hyderabad 4 BHK 63036
+Thane 3 BHK 60049
+Chennai 4 BHK 61408
+Coimbatore 1 BHK 46422
+Ranchi 4 BHK 99907
+Thane 1 BHK 57623
+Visakhapatnam 2 BHK 45817
+Lucknow 3 BHK 98167
+Madurai 2 BHK
+Trichy 3 BHK 65497
+Mysore 1 BHK
+New Delhi 2 BHK 28469
+Lucknow 2 BHK 36253
+Ghaziabad 4 BHK
+Gurgaon 3.5 BHk 74625
+Bengaluru 5 BHK 194917
+Kolkata No Data 21957
+Salem 2 BHK
+Chandigarh 2 BHK
+Hyderabad 2.5 BHK 92597
+Madurai 1 BHK
+Trichy 1 BHK 25005
+Coimbatore 4 BHK 95793
+Jaipur 2 BHK 18170
+Patna 4 BHK
+Patna 1 BHK 52446
+Mysore No Data
+Bhubaneswar 1 BHK 71611
+Hyderabad 1 BHK 117672
+New Delhi 1 BHK
+Coimbatore 3.5 BHk
+Chennai 2.5 BHK 48328
+Gurgaon 2.5 BHK 100785
+Ahmedabad 2.5 BHK
+Gurgaon 1 BHK
+Salem 1 BHK
+Chennai No Data
+Bengaluru 2.5 BHK 28830
+Bengaluru 3.5 BHk
+Lucknow 2.5 BHK 88061
+Lucknow 4 BHK 20662
+Gurgaon 4 BHK
+Hyderabad 3.5 BHk 39657
+Nagpur 4 BHK
+Noida 2.5 BHK 101597
+Pune 2.5 BHK 27593
+Jaipur 4 BHK 1616
+Mumbai 4 BHK 57463
+Jaipur 1 BHK
+Ahmedabad 3.5 BHk
+Pune 3.5 BHk 53193
+Madurai 4 BHK
+
+=== PAGE 9 ===
+Chennai 3.5 BHk
+Bhubaneswar 5 BHK
+Madurai 3.5 BHk
+Ahmedabad 4 BHK 94319
+Visakhapatnam 4 BHK
+Bhubaneswar 2.5 BHK
+Nashik 4 BHK
+Coimbatore > 5 BHK 68885
+Surat 1 BHK 25893
+Bhubaneswar 3.5 BHk
+Kolkata 2.5 BHK 63698
+Guwahati 2 BHK
+Surat 4 BHK 62401
+Patna 2.5 BHK
+Coimbatore 2.5 BHK
+Mysore 4 BHK
+Patna 5 BHK
+Noida 1 BHK 164403
+Visakhapatnam 2.5 BHK
+Visakhapatnam 1 BHK
+New Delhi 4 BHK
+Bengaluru > 5 BHK 47013
+Mysore 2.5 BHK
+Kolkata > 5 BHK 58468
+Chennai 5 BHK
+Hyderabad > 5 BHK 63536
+Jamshedpur 3 BHK
+Chandigarh 4 BHK 43413
+Guwahati 3 BHK 207933
+New Delhi 3.5 BHk
+Trivandrum 3 BHK 44955
+Noida 5 BHK
+Parbhani 5 BHK
+Guwahati 2.5 BHK
+Jaipur 5 BHK
+Trichy 4 BHK
+Bengaluru No Data
+Ghaziabad 1 BHK
+Coimbatore 5 BHK
+Bhubaneswar No Data
+Panaji No Data 36105
+Trivandrum 2 BHK
+Hyderabad 5 BHK
+Trivandrum 4 BHK
+Guwahati 4 BHK
+Jaipur 2.5 BHK
+Ranchi 2.5 BHK
+Raipur 2 BHK
+Srinagar 3 BHK
+Chandigarh 1 BHK
+Tiruppur 4 BHK
+Noida 3.5 BHk
+Ghaziabad 3.5 BHk
+Nagercoil 2 BHK
+Salem 4 BHK
+Nashik 1 BHK
+Services
+Counter top services
+
+=== PAGE 10 ===
+For Counter top services under Services, the optimisation can follow the below grid and pick basis the SKU added, Percentages below are difference from highest value SKU. Installation of Countertop with Backsplash and 40mm Nosing (Granite / Quartz) > Installation of Countertop without
+Backsplash and 40mm Nosing (Granite / Quartz) > Installation of Countertop with Backsplash and 20mm Nosing (Granite / Quartz) > Installation of Countertop without Backsplash and 20mm Nosing (Granite / Quartz).
+Installation of Installation of Installation of
+Countertop with Countertop without Countertop without
+Backsplash and 40mm Backsplash and 40mm Installation of Countertop with Backsplash and 20mm
+Nosing (Granite / Nosing (Granite / Backsplash and 20mm Nosing Nosing (Granite /
+Quartz) Quartz) (Granite / Quartz) Quartz)
+100% 95% 80% 75%
+Counter top Material
+For Counter top material under Services, the optimisation can follow the below grid. Percentages below are difference from highest value SKU.
+Kalinga > Camrola or AGL > Granite.
+Kalinga Camrola or AGL Granite
+100% 90% 50%
+Please refer to the below for Countertop Brand and Product Name Tagging.
+Countertop Brand Product Name
+Kalinga Crema Verona_20MM
+Kalinga Beige Diamante_20MM
+Kalinga Classic Beige_20MM
+Kalinga Cement_20MM
+Kalinga Concrete_20MM
+Kalinga Bianco Classic_20MM
+Kalinga Bianco Carrara_20MM
+Kalinga New Extra White_20MM
+Kalinga Bianco Superiore_20MM
+Kalinga Bianco Cristallo_20MM
+Kalinga Crema Scuro_20MM
+Kalinga Bianco Neve_20MM
+Kalinga Mocca Creme_20MM
+Kalinga Mocca Diamante_20MM
+Kalinga Sandy Diamante_20MM
+Kalinga Grigio Diamante_20MM
+Kalinga Nero Diamante_20MM
+Kalinga Repen_20MM
+Kalinga Bianco Diamante_20MM
+Kalinga Bermingham_20MM
+Kalinga Nisley_20MM
+Camrola Bianco Star _20MM-
+Camrola Costa Star_20MM
+Camrola Relicker _20MM
+Camrola Adonis _20MM
+Camrola Grigio Cam _20MM
+Camrola Quartz_Camrola White _20MM
+Camrola Snow Flake _20MM
+Camrola Graphite Star_20MM
+Camrola Inox Bristol_20MM
+Camrola Caramel_20MM
+Camrola Bianco Vetronila_20MM
+Camrola Chilled White_20MM
+Camrola Desert Grey_20MM
+Camrola Mint Grey_20MM
+Camrola Brown Star _20MM
+Camrola Cappuccino _20MM
+Camrola Carrara Miami _20MM
+Camrola Cotton White _20MM
+Camrola Gres Star _20MM
+Camrola Inox Brown _20MM
+Camrola Intense White _20MM
+Camrola Jupiter _20MM
+Camrola Ushus Brown _20MM
+Camrola Valencia _20MM
+Camrola RAPHAEL GOLD_20MM
+
+=== PAGE 11 ===
+AGL Bianco Maple _20MM
+AGL Coasta Maple_20MM
+AGL Essel Brown_20MM
+AGL Vanilla_20MM
+AGL Bianco Desert_20MM
+AGL Winter White_20MM
+AGL Wicker_20MM
+AGL Coasta Beige_20MM
+AGL Anthracite_20MM
+AGL Oasis_20MM
+AGL Galaxy_20MM
+AGL Burgundy Maple_20MM
+AGL Avalanche_20MM
+AGL Coasta Ivory_20MM
+AGL Gres_20MM
+AGL Titon Beige_20MM
+AGL Ginger Tan_20MM
+AGL Titon Bristol_20MM
+AGL New Mudpie_20MM
+AGL Cosmus_20MM
+AGL Royal Dream_20MM
+AGL Artic White_20MM
+AGL Graphite_20MM
+AGL Tosco Fiero_20MM
+AGL Titon Brown_20MM
+AGL Venus_20MM
+AGL Shitake_20MM
+AGL Indiano_20MM
+AGL Emperadore_20MM
+AGL Arctic Breeze_20MM
+AGL Bianco Pinta_20MM
+AGL Shampher White_20MM
+AGL Cosmopolitan_20MM
+AGL Bianco Sicilia_20MM
+AGL Saturvario_20MM
+AGL Cosmus_20MM
+AGL Cement_20MM
+AGL Shadow Grey_20MM
+AGL Mudpai_20MM
+AGL Ancient Beige_20MM
+AGL Grey Maple_20MM
+AGL Shitake_20MM
+AGL Winter White_20MM
+AGL Tosco Fiero_15MM
+AGL Avalanche_15MM
+AGL Coasta Ivory_15MM
+AGL Ginger Tan_15MM
+AGL Cosmus_15MM
+AGL Royal Dream_15MM
+AGL Venus_15MM
+AGL Emperadore_15MM
+AGL Indiano_15MM
+AGL Anthracite_15MM
+AGL Bianco Desert_15MM
+AGL Bianco Maple _15MM
+AGL Coasta Beige_15MM
+AGL Coasta Maple_15MM
+AGL Essel Brown_15MM
+AGL Graphite_15MM
+
+=== PAGE 12 ===
+AGL Oasis_15MM
+AGL Vanilla_15MM
+AGL Wicker_15MM
+AGL Winter White_15MM
+Granite Jet Black
+Granite Black Galaxy_16-18MM
+Granite Black Pearl_16-18MM
+Granite Black Granite_Brand_16-18MM
+Granite Steel Grey_16-18MM
+Granite Tan Brown_16-18MM
+Granite Sadali_16-18MM
+Granite Moon White_16-18MM
+Granite Z Brown _16-18MM
+Granite Paradise _16-18MM
+Granite P White_16-18MM
+Granite Rajeshwari Red_16-18MM
+Granite Ruby Red _16-18MM
+Granite Lav Blue_16-18MM
+Granite Coffee Brown _16-18MM
+Granite Cheema Pink_16-18MM
+Granite Alaska White_16-18MM
+Granite Multi Red_16-18MM
+Painting
+For Painting Under Services Category, the following are the rule sets for Optimization.
+1. First Check for Total Painting Area. Please pick the TOTAL BUILT-UP AREA from the quote's first sheet and convert it into Carpet area which is 75% of Built Up Area. Painting Quantity(sft) to be 3x of Carpet area if False Ceiling is not added or False ceiling with Paint SKU is added. If False Ceiling is added without Paint SKU,then quantity(sft) should be 3x of Carpet area + False Ceiling area.
+2. If there is considerable amount of Electrical services Scope of Work, then 40% x 3 x Carpet Area for Fresh Painting and 60% x 3 x Carpet Area for Re-painting.
+3. Third Set of Optimization can be as follows: Royale (e.g., Aspira, Glitz, Shyne, Matt, Luxury, Lusture) > Apcolite (e.g., Premium Emulsion, Satin, All Protek) > Tractor (e.g., Emulsion, Shyne, Sparc). Please check for these Keywords in Product Name. Percentages below are difference from highest value SKU.
+Ideal Room
+Product Series Applications Price
+Living rooms, master
+bedrooms, kids' rooms,
+kitchens, and
+bathrooms – anywhere
+you need the best
+Royale (e.g., Aspira, quality, highest
+Glitz, Shyne, Matt, durability, and
+Luxury, Lusture) premium finish. 100%
+Functional areas,
+hallways, kitchens, and
+Apcolite (e.g., kids' rooms, balancing
+Premium Emulsion, cost and quality for
+Satin, All Protek) everyday use. 80%
+Rental properties or
+low-traffic areas like
+guest bedrooms and
+ceilings, where budget
+Tractor (e.g., is a primary concern
+Emulsion, Shyne, and washability is less
+Sparc) critical. 70%
+Electrical Services
+For Electrical under Services Category, the following are the optimization rules sets.
+1.Please pick the Electrical Package from the below table basis City and Property Config. If False ceiling is there in scope, False Ceiling Electrical to be picked or else Basic Electrical to be picked.
+Electrical 1BHK 2BHK 3BHK 4BHK
+City Basic Electrical False Ceiling Electrical Basic Electrical False Ceiling Electrical Basic Electrical False Ceiling Electrical Basic Electrical False Ceiling Electrical
+Ahmedabad 18213 26018 23035 32907 27334 39049 36243 51776
+Bhubaneswar 18842 26918 23847 34068 28304 40434 37554 53649
+Bangalore 22499 32141 28545 40779 33925 48464 44935 64193
+coimbatore 21591 30845 27382 39118 32507 46439 43109 61584
+Chandigarh 18738 26768 23691 33844 28082 40117 37280 53257
+Chennai 23134 33049 29338 41912 34829 49756 46188 65983
+guwahati 18842 26918 23847 34068 28304 40434 37554 53649
+Hyderabad 22479 32113 28449 40642 33766 48238 44802 64002
+Jaipur 18842 26918 23847 34068 28304 40434 37554 53649
+Kochi 22727 32467 30692 43845 34613 49447 45845 65493
+Kolkata 21516 30737 27356 39080 32381 46259 42921 61316
+
+=== PAGE 13 ===
+Lucknow 18738 26768 23691 33844 28082 40117 37280 53257
+Madurai 19051 27216 24161 34516 28683 40975 38037 54339
+Mumbai 24504 35006 31165 44522 37113 53019 49167 70238
+Mysore 18529 26470 23508 33583 27938 39912 37005 52865
+Delhi 22753 32505 28767 41096 34099 48713 45269 64669
+Nagpur 20800 29715 26260 37514 31204 44577 41418 59168
+Nashik 20800 29715 26260 37514 31204 44577 41418 59168
+Patna 18842 26918 23847 34068 28304 40434 37554 53649
+Pune 23460 33514 29769 42527 35389 50556 46904 67006
+Ranchi 18842 26918 23847 34068 28304 40434 37554 53649
+Salem 19527 27895 24621 35172 29127 41610 38727 55324
+Surat 18625 26608 23628 33754 28043 40061 37133 53048
+Trichy 19527 27895 24621 35172 29127 41610 38727 55324
+Vijayawada 18842 26918 23847 34068 28304 40434 37554 53649
+vadodara 18213 26018 23035 32907 27334 39049 36243 51776
+Visakhapatnam 18842 26918 23847 34068 28304 40434 37554 53649
+Trivandrum 21136 30194 28543 40776 32190 45985 42636 60909
+False Ceiling
+For False Ceiling under Services, the following are the rule sets for optimisation.
+1. Gypsum Ceiling "Gyproc Board & Gyproc Xpert Channels" or Gypsum Ceiling - "Standard" > Gypsum Ceiling "Knauf USG Boards & Knauf Channels" or Gypsum Ceiling - Economy > Gypsum Ceiling "Knauf USG Boards & 0.3mm Channels". Please check for these Keywords in Product Name. Percentages below are difference from highest value SKU.
+2. The below table is the cost optimization grid for False Ceiling. Percentages below are difference from highest value SKU.
+Signature Classic Essential
+Gypsum Ceiling Gypsum Ceiling
+"Gyproc Board & "Knauf USG Boards &
+Gyproc Xpert Knauf Channels" or
+Channels" or Gypsum Gypsum Ceiling - Gypsum Ceiling "Knauf USG
+Ceiling - Standard Economy Boards & 0.3mm Channels"
+100% 90% 65%
