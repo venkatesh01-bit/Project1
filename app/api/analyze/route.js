@@ -151,7 +151,7 @@ async function fetchUrlContent(url) {
         }
         const quoteData = await quoteResp.json();
         
-        const serviceCharges = quoteData.discountData?.serviceCharges || quoteData.serviceChargeCapValue || 0;
+        const serviceCharges = quoteData.projectSummary?.discountData?.serviceCharges || quoteData.projectSummary?.serviceChargeCapValue || 0;
         
         let validityStr = "N/A";
         if (quoteData.publishDate && quoteData.quoteValidityDate) {
