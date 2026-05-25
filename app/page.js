@@ -682,7 +682,7 @@ function ResultsView({ result, onBack, onNew }) {
               </div>
             )}
 
-            {result.additionalScope && result.additionalScope.length > 0 && (
+            {result.additionalScope && result.additionalScope.length > 0 && comps.length > 0 && (
               <div className="results-section glass-card" style={{borderColor: 'var(--primary)'}}>
                 <h3 className="section-title">✨ Additional Scope by HomeLane</h3>
                 <p style={{fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1rem'}}>Items explicitly included in the HomeLane quote that competitors missed or charged extra for.</p>
@@ -980,19 +980,22 @@ function WaterfallVisualizer({ result }) {
 
   if (steps.length <= 1) return null;
 
+  const totalMaxSavings = startPrice - currentPrice;
+  const totalMaxPercent = (totalMaxSavings / startPrice) * 100;
+
   return (
     <div className="results-section glass-card" style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(246, 248, 250, 0.9) 100%)', border: '1px solid rgba(16, 185, 129, 0.25)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.05)', marginBottom: '2rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h3 className="section-title" style={{ margin: 0, color: 'var(--green)', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.4rem' }}>
-            📉 Value Engineering Waterfall
+            📉 Step-by-Step Quote Optimization Staircase
           </h3>
           <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '0.25rem 0 0 0' }}>
-            Step-by-step price reduction based on Category Team guidelines and design optimization strategies.
+            Cumulative optimization unlocked through Category Team guidelines and design adjustments.
           </p>
         </div>
         <div style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--green)', padding: '0.4rem 0.8rem', borderRadius: '20px', fontWeight: 'bold', fontSize: '0.88rem' }}>
-          Total Savings: ₹ {(startPrice - currentPrice).toLocaleString('en-IN')} ({-(((startPrice - currentPrice) / startPrice) * 100).toFixed(0)}%)
+          Max Optimization: ₹ {totalMaxSavings.toLocaleString('en-IN')} ({totalMaxPercent.toFixed(0)}% savings)
         </div>
       </div>
 
@@ -1000,10 +1003,14 @@ function WaterfallVisualizer({ result }) {
         {steps.map((step, idx) => {
           const isStart = idx === 0;
           const isEnd = idx === steps.length - 1;
-          const percentLeft = (step.price / startPrice) * 100;
+          const accumulatedSavings = startPrice - step.price;
+          const percentOptimised = (accumulatedSavings / startPrice) * 100;
           
+          // Progressive bar width representing how much optimization is unlocked compared to total max savings
+          const barWidth = isStart ? 0 : (accumulatedSavings / totalMaxSavings) * 100;
+
           const barColor = isStart 
-            ? 'linear-gradient(90deg, #f97316 0%, #f59e0b 100%)' 
+            ? 'rgba(0,0,0,0.05)' 
             : isEnd 
               ? 'linear-gradient(90deg, #10b981 0%, #059669 100%)' 
               : 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)';
@@ -1027,10 +1034,12 @@ function WaterfallVisualizer({ result }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', width: '100%' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                   <span style={{ fontWeight: '500', color: 'var(--text-primary)', lineHeight: '1.4' }}>{step.description}</span>
-                  <span style={{ fontWeight: '700', color: 'var(--text-secondary)', marginLeft: '1rem', whiteSpace: 'nowrap' }}>{percentLeft.toFixed(0)}% Left</span>
+                  <span style={{ fontWeight: '700', color: isStart ? 'var(--text-secondary)' : '#10b981', marginLeft: '1rem', whiteSpace: 'nowrap' }}>
+                    {isStart ? '0% optimized' : `₹ ${Math.round(accumulatedSavings).toLocaleString('en-IN')} optimized (${percentOptimised.toFixed(0)}% savings)`}
+                  </span>
                 </div>
                 <div className="waterfall-progress-bg" style={{ height: '8px', width: '100%', background: 'rgba(0,0,0,0.05)', borderRadius: '4px', overflow: 'hidden' }}>
-                  <div className="waterfall-progress-bar" style={{ height: '100%', width: `${percentLeft}%`, background: barColor, borderRadius: '4px', transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)' }}></div>
+                  <div className="waterfall-progress-bar" style={{ height: '100%', width: isStart ? '0%' : `${barWidth}%`, background: barColor, borderRadius: '4px', transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)' }}></div>
                 </div>
               </div>
             </div>
