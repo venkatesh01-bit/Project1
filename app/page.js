@@ -683,7 +683,13 @@ function ResultsView({ result, onBack, onNew }) {
               </div>
             )}
 
-            {result.kitchenAccessoriesSummary && (
+            {result.kitchenAccessoriesSummary && 
+             comps.length > 0 &&
+             result.kitchenAccessoriesSummary.hlCount &&
+             result.kitchenAccessoriesSummary.hlCount !== '-' &&
+             result.kitchenAccessoriesSummary.compNamesAndCounts &&
+             result.kitchenAccessoriesSummary.compNamesAndCounts !== '-' &&
+             result.kitchenAccessoriesSummary.compNamesAndCounts.toLowerCase() !== 'none' && (
               <div className="results-section glass-card alert-bg" style={{background: 'rgba(255,179,0,0.05)', border: '1px solid rgba(255,179,0,0.3)'}}>
                 <h3 className="section-title">🍳 Kitchen Accessories Highlight</h3>
                 <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '1.05rem'}}>
