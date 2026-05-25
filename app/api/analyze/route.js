@@ -11,6 +11,7 @@ Your job is to compare a HomeLane document against up to TWO competitor document
 
 ### Data Isolation Policy (CRITICAL):
 - **Document Integrity**: You are provided with multiple documents. You MUST treat them as independent data sources.
+- **HomeLane Pricing Rule (Net vs MRP)**: For the HomeLane quote, always extract and use the **Final Net Price (Total After Discount)** as 'hlPrice' and as the basis for the HomeLane total comparison, rather than the pre-discount Subtotal/Total Quote Price (MRP). This ensures you compare the actual final payable price (after discount) against competitor quotes. For competitors, ensure you are also comparing their final payable price (after all applicable discounts).
 - **No Data Bleed**: Never copy values (especially monetary amounts) from one document to another. If a value (like Design Fee) is explicitly present in the HomeLane document but missing in the Competitor document, leave it as null or "-" in the competitor breakdown. DO NOT assume numbers are the same.
 - **Direct Extraction**: Look for the specific "Total" or "Grand Total" in each of the [document_tags] separately.
 
@@ -170,9 +171,14 @@ async function fetchUrlContent(url) {
         md += `**Project ID:** ${projectId}\n`;
         md += `**Property config:** ${quoteData.propertyConfig || propData.property?.property_config || 'N/A'}\n`;
         md += `**Property name/address:** ${propData.property?.property_name || 'N/A'} - ${propData.property?.property_address || 'N/A'}\n`;
-        md += `**Total Quote Price:** ₹ ${quoteData.projectSummary?.total || 'N/A'}\n`;
+        const totalVal = quoteData.projectSummary?.total || 0;
+        const discountVal = quoteData.projectSummary?.discount || 0;
+        const netPriceVal = totalVal - discountVal;
+
+        md += `**Total Quote Price (MRP):** ₹ ${totalVal}\n`;
         md += `**SubTotal:** ₹ ${quoteData.projectSummary?.subTotal || 'N/A'}\n`;
-        md += `**Discount:** ₹ ${quoteData.projectSummary?.discount || 'N/A'}\n`;
+        md += `**Discount:** ₹ ${discountVal}\n`;
+        md += `**Final Net Price (Total After Discount - customer pays this):** ₹ ${netPriceVal}\n`;
         md += `**GST/Tax:** ₹ ${quoteData.projectSummary?.gstTax || 'N/A'}\n`;
         md += `**Design & Management Fee (Service Charges):** ₹ ${serviceCharges}\n`;
         md += `**Quote Validity / Expiry:** ${validityStr}\n\n`;
