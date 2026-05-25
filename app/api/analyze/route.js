@@ -151,6 +151,19 @@ async function fetchUrlContent(url) {
         }
         const quoteData = await quoteResp.json();
         
+        const serviceCharges = quoteData.discountData?.serviceCharges || quoteData.serviceChargeCapValue || 0;
+        
+        let validityStr = "N/A";
+        if (quoteData.publishDate && quoteData.quoteValidityDate) {
+          const publishDate = new Date(quoteData.publishDate);
+          const expiryDate = new Date(quoteData.publishDate + quoteData.quoteValidityDate);
+          const formatOptions = { day: '2-digit', month: 'short', year: 'numeric' };
+          const pubStr = publishDate.toLocaleDateString('en-IN', formatOptions);
+          const expStr = expiryDate.toLocaleDateString('en-IN', formatOptions);
+          const diffDays = Math.round(quoteData.quoteValidityDate / (1000 * 60 * 60 * 24));
+          validityStr = `Valid until ${expStr} (${diffDays} days from publish date ${pubStr})`;
+        }
+        
         // 3. Construct a beautiful, highly detailed markdown representation of the quote for the LLM
         let md = `# HomeLane Online Quote Details\n\n`;
         md += `**Customer Name:** ${propData.customer_profile?.name || quoteData.name || 'Unknown'}\n`;
@@ -160,7 +173,9 @@ async function fetchUrlContent(url) {
         md += `**Total Quote Price:** ₹ ${quoteData.projectSummary?.total || 'N/A'}\n`;
         md += `**SubTotal:** ₹ ${quoteData.projectSummary?.subTotal || 'N/A'}\n`;
         md += `**Discount:** ₹ ${quoteData.projectSummary?.discount || 'N/A'}\n`;
-        md += `**GST/Tax:** ₹ ${quoteData.projectSummary?.gstTax || 'N/A'}\n\n`;
+        md += `**GST/Tax:** ₹ ${quoteData.projectSummary?.gstTax || 'N/A'}\n`;
+        md += `**Design & Management Fee (Service Charges):** ₹ ${serviceCharges}\n`;
+        md += `**Quote Validity / Expiry:** ${validityStr}\n\n`;
         
         const rooms = quoteData.projectSummary?.rooms || [];
         md += `## ROOMS & CATEGORIES BREAKDOWN (${rooms.length} rooms):\n\n`;
@@ -253,7 +268,6 @@ async function fetchUrlContent(url) {
         
         return md;
       }
-    }
   } catch (err) {
     return `[Error fetching ${url}: ${err.message}]`;
   }
