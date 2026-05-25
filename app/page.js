@@ -232,10 +232,14 @@ function CompareForm({ onBack, onComplete }) {
 
     try {
       const hlData = hlSource === 'pdf' ? await extractTextFromPDF(hlFile) : (hlSource === 'url' ? hlUrl : hlRawText);
-      const comp1Data = comp1Source === 'pdf' ? await extractTextFromPDF(comp1File) : (comp1Source === 'url' ? comp1Url : comp1RawText);
-      const comp2Data = comp2Source === 'pdf' 
-        ? (comp2File ? await extractTextFromPDF(comp2File) : null) 
-        : (comp2Source === 'url' ? (comp2Url || null) : (comp2RawText || null));
+      
+      const comp1Data = hasComp1 
+        ? (comp1Source === 'pdf' ? await extractTextFromPDF(comp1File) : (comp1Source === 'url' ? comp1Url : comp1RawText))
+        : null;
+
+      const comp2Data = hasComp2
+        ? (comp2Source === 'pdf' ? await extractTextFromPDF(comp2File) : (comp2Source === 'url' ? comp2Url : comp2RawText))
+        : null;
 
       const res = await fetch("/api/analyze", {
         method: "POST",
