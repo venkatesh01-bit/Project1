@@ -26,7 +26,7 @@ When evaluating documents from these specific competitors, strictly enforce thes
 - **Livspace**: Watch hidden design fees (Bello 5%, Select 10%, Vesta 12%). Translate materials: HDF HMR = HGP, HydraTuf Plus Ply = BWR, HydraTuf Max Ply = BWP. **Skirting Rule**: Livspace does NOT have a separate skirting panel for wardrobes (skirting is part of the carcass). HomeLane provides a separate skirting panel matching the shutter finish, which slightly increases price but vastly improves functionality. Highlight this poor functionality from Livspace. **Pricing Model**: Livspace does Module Costing. Provide module-wise dimensions and module count side-by-side comparison in \`moduleComparison\`.
 - **Design Cafe (DC)**: They charge a mandatory 9% design fee on MRP. "Qarpentri" line has limited shades (only 22); custom colors increase pricing by ~40%. Qarpentri max discount is 25%. **Pricing Model**: DC does Module Costing. Provide module-wise dimensions and module count side-by-side comparison in \`moduleComparison\`.
 
-### HomeLane Quote Optimization Rules (Category Team Guidelines):
+### HomeLane Proposal Value & Design Optimization Opportunities:
 Analyze the HomeLane quote and identify opportunities to optimize the design/specifications to lower HomeLane's price and win the deal. Suggest up to 3 high-impact optimizations from the following categories if applicable, and return them in 'hlOptimisations' array:
 1. **Fitted Furniture (Modular)**:
    - **Construction Type**: Hinged/Sliding/Floor-to-Ceiling Wardrobes, Entertainment/Crockery/Foyer Units, Suspended/Floor Standing Vanity Units can be optimized by 10% by changing construction to "Fusion" (except Fillers, Shelves, Countertops, Skirting, Panels, Lofts). Note that Cabinet Material is a % of product cost (e.g., Room Divider: 5% Cab / 95% Shutter, Entertainment/Crockery/Foyer/Hinged: 76% Cab / 24% Shutter, Sliding: 35% Cab / 65% Shutter).
@@ -110,6 +110,143 @@ Constraints:
 
 async function fetchUrlContent(url) {
   try {
+    // Check if it is a HomeLane quote share URL
+    if (url.includes('homelane.com/sc-quotes-share/')) {
+      const keyMatch = url.match(/\/sc-quotes-share\/([^/?#]+)/);
+      if (keyMatch && keyMatch[1]) {
+        const encryptedKey = keyMatch[1];
+        
+        // 1. Fetch user property details to get the project_id
+        const rosterUrl = `https://rosters.homelane.com/apis/general/fetchUserPropertyDetails?key=${encryptedKey}&isProCust=1`;
+        const propResp = await fetch(rosterUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+        if (!propResp.ok) {
+          throw new Error(`Failed to fetch property details (Status: ${propResp.status})`);
+        }
+        const propData = await propResp.json();
+        const projectId = propData.project_id;
+        
+        if (!projectId) {
+          throw new Error("Could not find project_id associated with this HomeLane quote link.");
+        }
+        
+        // 2. Fetch the detailed quote
+        const scUrl = `https://sc-backend-production.homelane.com/api/v1.0/detailedQuote/${projectId}`;
+        const quoteResp = await fetch(scUrl, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0',
+            'Authorization': 'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9ST1NURVIiLCJvcGVuIjp0cnVlLCJ1c2VybmFtZSI6InJvc3Rlci1zZXJ2aWNlIiwic3ViIjoicm9zdGVyLXNlcnZpY2UiLCJpYXQiOjE3MDIwMzcyMzcsImV4cCI6MTg1OTcxNzIzN30.X7HhD-eIEvGu2yxRD724a1ivzfYklifFj3L_TsCVgMYHrldpUrEmWTcpDoYGTY5GHQ2bjEUEipIvY5uRin6WMQ'
+          }
+        });
+        
+        if (!quoteResp.ok) {
+          throw new Error(`Failed to fetch detailed quote (Status: ${quoteResp.status})`);
+        }
+        const quoteData = await quoteResp.json();
+        
+        // 3. Construct a beautiful, highly detailed markdown representation of the quote for the LLM
+        let md = `# HomeLane Online Quote Details\n\n`;
+        md += `**Customer Name:** ${propData.customer_profile?.name || quoteData.name || 'Unknown'}\n`;
+        md += `**Project ID:** ${projectId}\n`;
+        md += `**Property config:** ${quoteData.propertyConfig || propData.property?.property_config || 'N/A'}\n`;
+        md += `**Property name/address:** ${propData.property?.property_name || 'N/A'} - ${propData.property?.property_address || 'N/A'}\n`;
+        md += `**Total Quote Price:** ₹ ${quoteData.projectSummary?.total || 'N/A'}\n`;
+        md += `**SubTotal:** ₹ ${quoteData.projectSummary?.subTotal || 'N/A'}\n`;
+        md += `**Discount:** ₹ ${quoteData.projectSummary?.discount || 'N/A'}\n`;
+        md += `**GST/Tax:** ₹ ${quoteData.projectSummary?.gstTax || 'N/A'}\n\n`;
+        
+        const rooms = quoteData.projectSummary?.rooms || [];
+        md += `## ROOMS & CATEGORIES BREAKDOWN (${rooms.length} rooms):\n\n`;
+        
+        for (const room of rooms) {
+          md += `### Room: ${room.roomName} (${room.roomType}) - Price: ₹ ${room.price}\n`;
+          
+          // Fitted Furniture / Woodwork
+          const ffData = room.fittedFurniture?.data || [];
+          if (ffData.length > 0) {
+            md += `#### Fitted Furniture / Woodwork:\n`;
+            for (const item of ffData) {
+              md += `- **Module:** ${item.name} (Total Price: ₹ ${item.price})\n`;
+              const subCats = item.subCategories || [];
+              for (const sc of subCats) {
+                const subItems = sc.items || [];
+                for (const subItem of subItems) {
+                  const prod = subItem.product || {};
+                  md += `  - **Item Name:** ${subItem.name} | Dims: ${subItem.dimension || prod.dimension || 'N/A'} | Qty: ${subItem.quantity} | Price: ₹ ${subItem.price}\n`;
+                  
+                  const cabinet = subItem.details?.cabinet || subItem.cabinet || '';
+                  const hinges = subItem.details?.hingeMake || subItem.hingeMake || '';
+                  const softClose = subItem.details?.hingeSoftClose || (subItem.hingeSoftClose ? 'Yes' : 'No');
+                  if (cabinet) md += `    - Cabinet/Carcass: ${cabinet}\n`;
+                  if (hinges) md += `    - Hinges/Hardware: ${hinges} (Soft Close: ${softClose})\n`;
+                  
+                  const shutters = subItem.details?.shutters || subItem.shutters || [];
+                  if (shutters.length > 0) {
+                    md += `    - Shutters Finish/Core:\n`;
+                    for (const sh of shutters) {
+                      md += `      * ${sh.name} (Core: ${sh.coreName}, Finish: ${sh.finishName}, Color: ${sh.color})\n`;
+                    }
+                  }
+                  
+                  const accs = subItem.accessories || [];
+                  if (accs.length > 0) {
+                    md += `    - Accessories:\n`;
+                    for (const ac of accs) {
+                      md += `      * Name: ${ac.name} (Qty: ${ac.quantity}, Make: ${ac.tcMake || ac.make || 'N/A'}, Price: ₹ ${ac.price})\n`;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          
+          // Services
+          const srvData = room.services?.data || [];
+          if (srvData.length > 0) {
+            md += `#### Services:\n`;
+            for (const item of srvData) {
+              md += `- **Service Category:** ${item.name} (Price: ₹ ${item.price})\n`;
+              for (const sub of item.items || []) {
+                const prod = sub.product || {};
+                md += `  - **Service:** ${sub.name} (Qty: ${sub.quantity || 'N/A'}, Price: ₹ ${sub.price})\n`;
+                if (prod.description) md += `    - Description: ${prod.description.replace(/<[^>]+>/g, ' ')}\n`;
+                if (sub.length || sub.width || sub.height) {
+                  md += `    - Dimensions: L ${sub.length} x W ${sub.width} x H ${sub.height}\n`;
+                }
+              }
+            }
+          }
+          
+          // Appliances
+          const appData = room.appliances?.data || [];
+          if (appData.length > 0) {
+            md += `#### Appliances / HDS / Extras:\n`;
+            for (const item of appData) {
+              md += `- **Item:** ${item.name} (Price: ₹ ${item.price})\n`;
+              for (const sub of item.items || []) {
+                md += `  - ${sub.name} (Qty: ${sub.quantity || 'N/A'}, Price: ₹ ${sub.price})\n`;
+              }
+            }
+          }
+          
+          // Loose Furniture
+          const looseData = room.looseFurniture?.data || [];
+          if (looseData.length > 0) {
+            md += `#### Loose Furniture:\n`;
+            for (const item of looseData) {
+              md += `- **Item:** ${item.name} (Price: ₹ ${item.price})\n`;
+              for (const sub of item.items || []) {
+                md += `  - ${sub.name} (Qty: ${sub.quantity || 'N/A'}, Price: ₹ ${sub.price})\n`;
+              }
+            }
+          }
+          
+          md += `\n`;
+        }
+        
+        return md;
+      }
+    }
+
     const resp = await fetch(url, { 
       headers: { 
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',

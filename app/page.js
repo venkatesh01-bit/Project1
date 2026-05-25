@@ -172,7 +172,7 @@ function CompareForm({ onBack, onComplete }) {
   const [hlFile, setHlFile] = useState(null);
   const [hlUrl, setHlUrl] = useState("");
   const [hlRawText, setHlRawText] = useState("");
-  const [hlSource, setHlSource] = useState("pdf"); // 'pdf', 'url', or 'text'
+  const [hlSource, setHlSource] = useState("url"); // 'pdf', 'url', or 'text'
 
   const [comp1File, setComp1File] = useState(null);
   const [comp1Url, setComp1Url] = useState("");
@@ -307,9 +307,19 @@ function CompareForm({ onBack, onComplete }) {
             <h3 className="fieldset-title">{label} {isOptional && <span className="optional-tag">Optional</span>}</h3>
           </div>
           <div className="segmented-control">
-            <button type="button" className={`seg-btn ${source === 'pdf' ? 'active' : ''}`} onClick={() => setSource('pdf')}>PDF</button>
-            <button type="button" className={`seg-btn ${source === 'url' ? 'active' : ''}`} onClick={() => setSource('url')}>Link</button>
-            <button type="button" className={`seg-btn ${source === 'text' ? 'active' : ''}`} onClick={() => setSource('text')}>Paste BOQ</button>
+            {isHL ? (
+              <>
+                <button type="button" className={`seg-btn ${source === 'url' ? 'active' : ''}`} onClick={() => setSource('url')}>Link</button>
+                <button type="button" className={`seg-btn ${source === 'pdf' ? 'active' : ''}`} onClick={() => setSource('pdf')}>PDF</button>
+                <button type="button" className={`seg-btn ${source === 'text' ? 'active' : ''}`} onClick={() => setSource('text')}>Paste BOQ</button>
+              </>
+            ) : (
+              <>
+                <button type="button" className={`seg-btn ${source === 'pdf' ? 'active' : ''}`} onClick={() => setSource('pdf')}>PDF</button>
+                <button type="button" className={`seg-btn ${source === 'url' ? 'active' : ''}`} onClick={() => setSource('url')}>Link</button>
+                <button type="button" className={`seg-btn ${source === 'text' ? 'active' : ''}`} onClick={() => setSource('text')}>Paste BOQ</button>
+              </>
+            )}
           </div>
         </div>
         
@@ -789,10 +799,10 @@ function ResultsView({ result, onBack, onNew }) {
             {result.hlOptimisations && result.hlOptimisations.length > 0 && (
               <div className="results-section glass-card" style={{borderLeft: '4px solid #eab308'}}>
                 <h3 className="section-title" style={{color: '#ca8a04', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-                  💡 Category Team Optimization Recommendations
+                  💡 HomeLane Value & Design Optimization Opportunities
                 </h3>
                 <p style={{fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem'}}>
-                  Apply these rulebook guidelines to optimize your HomeLane proposal and offer a more competitive quotation.
+                  Maximize value and competitiveness. Apply these recommended design adjustments and alternative configurations to optimize your proposal pricing.
                 </p>
                 <div className="factor-table-wrap">
                   <table className="factor-table">
