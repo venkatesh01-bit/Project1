@@ -110,26 +110,34 @@ Constraints:
 
 async function fetchUrlContent(url) {
   try {
+    let encryptedKey = null;
+    let projectId = null;
+    let propData = {};
+
     // Check if it is a HomeLane quote share URL
     if (url.includes('homelane.com/sc-quotes-share/')) {
       const keyMatch = url.match(/\/sc-quotes-share\/([^/?#]+)/);
       if (keyMatch && keyMatch[1]) {
-        const encryptedKey = keyMatch[1];
+        encryptedKey = keyMatch[1];
         
-        // 1. Fetch user property details to get the project_id
+        // Fetch user property details to get the project_id
         const rosterUrl = `https://rosters.homelane.com/apis/general/fetchUserPropertyDetails?key=${encryptedKey}&isProCust=1`;
         const propResp = await fetch(rosterUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } });
         if (!propResp.ok) {
           throw new Error(`Failed to fetch property details (Status: ${propResp.status})`);
         }
-        const propData = await propResp.json();
-        const projectId = propData.project_id;
-        
-        if (!projectId) {
-          throw new Error("Could not find project_id associated with this HomeLane quote link.");
-        }
-        
-        // 2. Fetch the detailed quote
+        propData = await propResp.json();
+        projectId = propData.project_id;
+      }
+    } else if (url.includes('homelane.com/sc-quotes/')) {
+      const projectMatch = url.match(/\/sc-quotes\/([^/?#]+)/);
+      if (projectMatch && projectMatch[1]) {
+        projectId = projectMatch[1];
+      }
+    }
+
+    if (projectId) {
+        // Fetch the detailed quote
         const scUrl = `https://sc-backend-production.homelane.com/api/v1.0/detailedQuote/${projectId}`;
         const quoteResp = await fetch(scUrl, {
           headers: {
