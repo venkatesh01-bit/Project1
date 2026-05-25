@@ -254,8 +254,13 @@ async function fetchUrlContent(url) {
         return md;
       }
     }
+  } catch (err) {
+    return `[Error fetching ${url}: ${err.message}]`;
   }
+}
 
+async function fetchRegularUrlContent(url) {
+  try {
     const resp = await fetch(url, { 
       headers: { 
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
@@ -334,8 +339,12 @@ export async function POST(request) {
     let finalComp2 = comp2Text;
 
     if (hlSource === 'url' && hlText?.startsWith('http')) finalHl = await fetchUrlContent(hlText);
-    if (comp1Source === 'url' && comp1Text?.startsWith('http')) finalComp1 = await fetchUrlContent(comp1Text);
-    if (comp2Source === 'url' && comp2Text?.startsWith('http')) finalComp2 = await fetchUrlContent(comp2Text);
+    if (comp1Source === 'url' && comp1Text?.startsWith('http')) {
+      finalComp1 = comp1Text.includes('homelane.com') ? await fetchUrlContent(comp1Text) : await fetchRegularUrlContent(comp1Text);
+    }
+    if (comp2Source === 'url' && comp2Text?.startsWith('http')) {
+      finalComp2 = comp2Text.includes('homelane.com') ? await fetchUrlContent(comp2Text) : await fetchRegularUrlContent(comp2Text);
+    }
 
     const hasCompetitor = (finalComp1 && finalComp1.trim().length > 0 && !finalComp1.includes('[Failed to fetch')) || 
                           (finalComp2 && finalComp2.trim().length > 0 && !finalComp2.includes('[Failed to fetch'));
