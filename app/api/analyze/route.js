@@ -28,7 +28,7 @@ When evaluating documents from these specific competitors, strictly enforce thes
 - **Design Cafe (DC)**: They charge a mandatory 9% design fee on MRP. "Qarpentri" line has limited shades (only 22); custom colors increase pricing by ~40%. Qarpentri max discount is 25%. **Pricing Model**: DC does Module Costing. Provide module-wise dimensions and module count side-by-side comparison in \`moduleComparison\`.
 
 ### HomeLane Proposal Value & Design Optimization Opportunities:
-Analyze the HomeLane quote and identify opportunities to optimize the design/specifications to lower HomeLane's price and win the deal. Suggest up to 3 high-impact optimizations from the following categories if applicable, and return them in 'hlOptimisations' array:
+Analyze the HomeLane quote and identify ALL possible opportunities to optimize the design/specifications to lower HomeLane's price and win the deal. You MUST capture and list EVERY applicable optimization step-by-step across all rooms and categories. Do NOT cap the recommendations at 2 or 3; run a highly detailed, comprehensive analysis and return all of them in the 'hlOptimisations' array:
 1. **Fitted Furniture (Modular)**:
    - **Construction Type**: Hinged/Sliding/Floor-to-Ceiling Wardrobes, Entertainment/Crockery/Foyer Units, Suspended/Floor Standing Vanity Units can be optimized by 10% by changing construction to "Fusion" (except Fillers, Shelves, Countertops, Skirting, Panels, Lofts). Note that Cabinet Material is a % of product cost (e.g., Room Divider: 5% Cab / 95% Shutter, Entertainment/Crockery/Foyer/Hinged: 76% Cab / 24% Shutter, Sliding: 35% Cab / 65% Shutter).
    - **Cabinet Material**: BWP Ply (100%) > Hydroguard Plus HDF (85%) > Prelam BWR / Prelam Comply (75%) > Prelam Hydroguard Plus-HDF (66%) > Prelam AQS MDF-Clr-BSL / Prelam AQS MDF-R / AQS-MDF-R (60%) > Prelam AQS MDF-R (49%). Suggest only up to 2 tiers down.
@@ -98,7 +98,14 @@ Return your analysis as a **valid JSON object** with this structure:
   ],
   "actionPlan": ["Point 1", "Point 2"],
   "hlOptimisations": [
-    { "category": "Modular / Painting / Electrical / False Ceiling / Countertop", "current": "Current Specification", "recommended": "Recommended Specification", "savings": "₹ X", "note": "Reasoning from the rulebook" }
+    { 
+      "category": "Modular / Painting / Electrical / False Ceiling / Countertop", 
+      "current": "Current Specification", 
+      "recommended": "Recommended Specification", 
+      "savings": "₹ X", 
+      "valuePostOptimisation": "₹ Y (Estimated item/category value after this optimization is applied)", 
+      "note": "Reasoning from the rulebook" 
+    }
   ]
 }
 

@@ -848,6 +848,7 @@ function ResultsView({ result, onBack, onNew }) {
                         <th>Current Design Spec</th>
                         <th>Recommended Alternative</th>
                         <th>Est. Savings</th>
+                        <th>Post-Opt. Value</th>
                         <th>Category Guidelines</th>
                       </tr>
                     </thead>
@@ -858,6 +859,7 @@ function ResultsView({ result, onBack, onNew }) {
                           <td style={{color: '#ef4444', textDecoration: 'line-through', fontSize: '0.85rem'}}>{opt.current}</td>
                           <td style={{color: '#22c55e', fontWeight: '600', fontSize: '0.85rem'}}>{opt.recommended}</td>
                           <td style={{color: '#22c55e', fontWeight: '700'}}>{opt.savings}</td>
+                          <td style={{color: 'var(--primary)', fontWeight: '700'}}>{opt.valuePostOptimisation || '—'}</td>
                           <td style={{fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: '1.4'}}>{opt.note}</td>
                         </tr>
                       ))}
