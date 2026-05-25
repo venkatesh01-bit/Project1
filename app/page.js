@@ -65,19 +65,19 @@ export default function ComparePage() {
       <nav className="navbar glass-nav light">
         <div className="nav-left">
           <div className="logo-mark sm hungry">HL</div>
-          <span className="nav-brand dark-text">Sales Intelligence</span>
+          <span className="nav-brand dark-text">Sales & Design Intelligence</span>
         </div>
       </nav>
 
       <main className="main-content">
         <div className="hero-section light">
           <div className="hero-content">
-            <div className="hero-tag hungry">Compare. Win. Deliver.</div>
+            <div className="hero-tag hungry">Compare. Optimize. Win.</div>
             <h1 className="hero-title flashy-text hungry">Kill The Bill</h1>
-            <p className="hero-sub dark">Empowering HomeLane Champs to crush the competition with data-driven strategies.</p>
+            <p className="hero-sub dark">Empowering HomeLane Champs to optimize quotes, beat competition, and win every deal.</p>
             <div className="hero-actions">
               <button className="btn btn-primary btn-xl hungry-btn" onClick={() => setActiveTab("compare")}>
-                + New Comparison
+                + New Analysis / Optimizer
               </button>
             </div>
           </div>
@@ -381,7 +381,7 @@ function CompareForm({ onBack, onComplete }) {
              <span className="brand-name">Intelligence Engine <span className="version-tag hungry">V3.0</span></span>
           </div>
           <h1 className="visual-hero-title">Fueling The Win<span className="hungry-text">.</span></h1>
-          <p className="visual-hero-sub">Upload quotes to extract actionable insights and close the deal.</p>
+          <p className="visual-hero-sub">Optimize your HomeLane proposal using category rulebooks, or compare and beat competitor quotes side-by-side.</p>
         </div>
       </div>
 
@@ -651,6 +651,15 @@ function ResultsView({ result, onBack, onNew }) {
                  <BreakdownCard key={idx} title={c.name} data={c.breakdown} rooms={result.rooms} providerKey={idx === 0 ? 'comp1Value' : 'comp2Value'} />
                ))}
             </div>
+
+            {(!comps || comps.length === 0) && (
+              <div className="results-section glass-card" style={{borderLeft: '4px solid var(--green)'}}>
+                <h3 className="section-title" style={{color: 'var(--green)'}}>🛠️ Self-Optimization Active Mode</h3>
+                <p style={{fontSize: '0.9rem', color: 'var(--text-secondary)'}}>
+                  No competitor quotes were uploaded. The HomeLane proposal was evaluated standalone using the official category team rulebook to identify architectural, specification, and finish optimizations to win over the client.
+                </p>
+              </div>
+            )}
 
             {result.additionalScope && result.additionalScope.length > 0 && (
               <div className="results-section glass-card" style={{borderColor: 'var(--primary)'}}>
