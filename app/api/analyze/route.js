@@ -253,6 +253,7 @@ async function fetchUrlContent(url) {
         
         return md;
       }
+    }
   } catch (err) {
     return `[Error fetching ${url}: ${err.message}]`;
   }
