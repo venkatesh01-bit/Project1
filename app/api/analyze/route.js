@@ -254,6 +254,7 @@ async function fetchUrlContent(url) {
         return md;
       }
     }
+  }
 
     const resp = await fetch(url, { 
       headers: { 
