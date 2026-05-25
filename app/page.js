@@ -223,9 +223,9 @@ function CompareForm({ onBack, onComplete }) {
     if (hlSource === 'url' && !hlUrl) return setError("Please provide the HomeLane quote Weblink.");
     if (hlSource === 'text' && !hlRawText) return setError("Please paste the HomeLane quote text.");
     
-    if (comp1Source === 'pdf' && !comp1File) return setError("Please upload the 1st competitor quote PDF.");
-    if (comp1Source === 'url' && !comp1Url) return setError("Please provide the 1st competitor quote Weblink.");
-    if (comp1Source === 'text' && !comp1RawText) return setError("Please paste the 1st competitor quote text.");
+    // Competitor quotes are now fully optional
+    const hasComp1 = comp1Source === 'pdf' ? !!comp1File : (comp1Source === 'url' ? !!comp1Url : !!comp1RawText);
+    const hasComp2 = comp2Source === 'pdf' ? !!comp2File : (comp2Source === 'url' ? !!comp2Url : !!comp2RawText);
 
     setIsAnalysing(true);
     const interval = setInterval(() => setStep(s => s < 2 ? s + 1 : s), 3000);
@@ -424,7 +424,7 @@ function CompareForm({ onBack, onComplete }) {
             </div>
 
             {renderQuoteSection('hl', 'HomeLane Quote', hlSource, setHlSource, hlFile, setHlFile, hlUrl, setHlUrl, hlRawText, setHlRawText)}
-            {renderQuoteSection('comp1', 'Competitor Quote I', comp1Source, setComp1Source, comp1File, setComp1File, comp1Url, setComp1Url, comp1RawText, setComp1RawText)}
+            {renderQuoteSection('comp1', 'Competitor Quote I', comp1Source, setComp1Source, comp1File, setComp1File, comp1Url, setComp1Url, comp1RawText, setComp1RawText, true)}
             {renderQuoteSection('comp2', 'Competitor Quote II', comp2Source, setComp2Source, comp2File, setComp2File, comp2Url, setComp2Url, comp2RawText, setComp2RawText, true)}
 
             <div className="compare-fieldset borderless">

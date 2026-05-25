@@ -328,14 +328,33 @@ export async function POST(request) {
     if (comp1Source === 'url' && comp1Text?.startsWith('http')) finalComp1 = await fetchUrlContent(comp1Text);
     if (comp2Source === 'url' && comp2Text?.startsWith('http')) finalComp2 = await fetchUrlContent(comp2Text);
 
+    const hasCompetitor = (finalComp1 && finalComp1.trim().length > 0 && !finalComp1.includes('[Failed to fetch')) || 
+                          (finalComp2 && finalComp2.trim().length > 0 && !finalComp2.includes('[Failed to fetch'));
+
+    let dynamicSystemPrompt = SYSTEM_PROMPT;
+
+    if (!hasCompetitor) {
+      // Modify systemic instructions to optimize HomeLane quote only
+      dynamicSystemPrompt = SYSTEM_PROMPT + `\n\n### IMPORTANT NOTICE: NO COMPETITOR QUOTE IS PRESENT.
+You must run in **OPTIMIZATION-ONLY MODE**:
+1. Focus entirely on analyzing the HomeLane quote and suggesting up to 3 high-impact optimization recommendations (cabinet core, finishes, painting, false ceiling, countertops, etc.) to optimize proposal pricing in 'hlOptimisations'.
+2. Set 'competitors' array to an empty array [].
+3. For 'rooms' array, populate room details with only the HomeLane pricing ('hlValue') and note down specific layout observations or where you think pricing is high. Leave competitor values as null/'-'.
+4. For 'factors' array, list the factors for HomeLane woodwork/specifications. Leave competitor values as null/'-'.
+5. Populate 'actionPlan' with specific strategies for the sales rep to pitch this proposal, convince the client of HomeLane's quality, and close the deal.`;
+    } else {
+      dynamicSystemPrompt = SYSTEM_PROMPT + `\n\n### IMPORTANT NOTICE: COMPETITOR QUOTE IS PRESENT.
+You must run in **COMPARISON & BEAT-COMPETITOR MODE**:
+1. Identify all gaps, discrepancies, and missed scopes between HomeLane and the competitor quotes.
+2. Provide strategic counter-arguments and specific opportunities in 'hlOptimisations' and 'actionPlan' to reduce HomeLane's price to beat the competitor quote while ensuring robust sales closing strategies.`;
+    }
+
     const userMessage = `
 [HOMELANE_QUOTE]
 ${finalHl}
 [/HOMELANE_QUOTE]
 
-[COMPETITOR_1_QUOTE]
-${finalComp1}
-[/COMPETITOR_1_QUOTE]
+${finalComp1 ? `[COMPETITOR_1_QUOTE]\n${finalComp1}\n[/COMPETITOR_1_QUOTE]` : ""}
 
 ${finalComp2 ? `[COMPETITOR_2_QUOTE]\n${finalComp2}\n[/COMPETITOR_2_QUOTE]` : ""}
 
@@ -343,8 +362,9 @@ ${finalComp2 ? `[COMPETITOR_2_QUOTE]\n${finalComp2}\n[/COMPETITOR_2_QUOTE]` : ""
 - Project Type: ${projectType}
 - Sales Rep Notes: ${comments || "None"}
 - Customer: ${customerName}
+- Analysis Mode: ${hasCompetitor ? "Comparison & Beat Competitor" : "Optimization Only"}
 
-Please analyse these documents and return the JSON as instructed. Focus on an apple-to-apple comparison.
+Please analyse these documents and return the JSON as instructed.
 `.trim();
 
     const apiKey = process.env.GEMINI_API_KEY;
@@ -355,7 +375,7 @@ Please analyse these documents and return the JSON as instructed. Focus on an ap
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
     
     const geminiBody = {
-      systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      systemInstruction: { parts: [{ text: dynamicSystemPrompt }] },
       contents: [{ role: "user", parts: [{ text: userMessage }] }],
       generationConfig: {
         temperature: 0.3,
