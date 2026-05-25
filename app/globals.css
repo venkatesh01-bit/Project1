@@ -2293,3 +2293,34 @@ table.factor-table {
 .pdf-only-header {
   display: none;
 }
+
+/* ============================================================
+   Waterfall & Split Landing Enhancements
+   ============================================================ */
+.select-hover-effect {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.select-hover-effect:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+.action-card-select:hover {
+  border-color: var(--primary-hungry) !important;
+}
+
+.action-card-select:hover button.hungry-btn {
+  transform: scale(1.03);
+}
+
+.action-card-select:hover button.hungry-outline {
+  background: var(--primary-hungry) !important;
+  color: #ffffff !important;
+}
+
+.waterfall-step-row:hover {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-color: var(--primary-hungry-glow) !important;
+  transform: scale(1.005);
+}

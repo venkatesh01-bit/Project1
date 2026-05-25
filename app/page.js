@@ -10,6 +10,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
 export default function ComparePage() {
   const [activeTab, setActiveTab] = useState("dashboard"); // dashboard, compare, results
+  const [formMode, setFormMode] = useState("comparator"); // 'comparator' or 'optimiser'
   const [history, setHistory] = useState([]);
   const [currentResult, setCurrentResult] = useState(null);
   
@@ -75,10 +76,24 @@ export default function ComparePage() {
             <div className="hero-tag hungry">Compare. Optimize. Win.</div>
             <h1 className="hero-title flashy-text hungry">Kill The Bill</h1>
             <p className="hero-sub dark">Empowering HomeLane Champs to optimize quotes, beat competition, and win every deal.</p>
-            <div className="hero-actions">
-              <button className="btn btn-primary btn-xl hungry-btn" onClick={() => setActiveTab("compare")}>
-                + New Analysis / Optimizer
-              </button>
+            <div className="hero-actions" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem', marginTop: '2rem', width: '100%', maxWidth: '750px' }}>
+              <div className="action-card-select glass-card select-hover-effect" style={{ padding: '1.5rem', cursor: 'pointer', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: '12px', border: '1px solid rgba(59, 130, 246, 0.2)', background: 'rgba(59, 130, 246, 0.02)' }} onClick={() => { setFormMode("comparator"); setActiveTab("compare"); }}>
+                <div>
+                  <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>⚔️</div>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '700', margin: '0 0 0.5rem 0', color: 'var(--text-primary)' }}>Quote Comparator</h3>
+                  <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', margin: 0, lineHeight: '1.4' }}>Compare HomeLane side-by-side with competitors. Highlight scope gaps, hidden fees, and leverage premium features to win.</p>
+                </div>
+                <button className="btn btn-primary btn-sm hungry-btn" style={{ marginTop: '1.25rem', alignSelf: 'flex-start', padding: '0.5rem 1rem' }}>Beat Competition →</button>
+              </div>
+
+              <div className="action-card-select glass-card select-hover-effect" style={{ padding: '1.5rem', cursor: 'pointer', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: '12px', border: '1px solid rgba(234, 179, 8, 0.2)', background: 'rgba(234, 179, 8, 0.02)' }} onClick={() => { setFormMode("optimiser"); setActiveTab("compare"); }}>
+                <div>
+                  <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>💡</div>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '700', margin: '0 0 0.5rem 0', color: 'var(--text-primary)' }}>Quote Optimiser</h3>
+                  <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', margin: 0, lineHeight: '1.4' }}>Optimize a standalone HomeLane quote against category guidelines. Run value-engineering with an interactive staircase waterfall.</p>
+                </div>
+                <button className="btn btn-secondary btn-sm hungry-outline" style={{ marginTop: '1.25rem', alignSelf: 'flex-start', padding: '0.5rem 1rem' }}>Optimize Proposal →</button>
+              </div>
             </div>
           </div>
           <div className="hero-graphic floating">
@@ -153,7 +168,7 @@ export default function ComparePage() {
   return (
     <>
       {activeTab === "dashboard" && renderDashboard()}
-      {activeTab === "compare" && <CompareForm onBack={() => setActiveTab("dashboard")} onComplete={(res) => {
+      {activeTab === "compare" && <CompareForm formMode={formMode} onBack={() => setActiveTab("dashboard")} onComplete={(res) => {
         const newHistory = [...history, res];
         saveHistory(newHistory);
         setCurrentResult(res);
@@ -164,7 +179,7 @@ export default function ComparePage() {
   );
 }
 
-function CompareForm({ onBack, onComplete }) {
+function CompareForm({ formMode = "comparator", onBack, onComplete }) {
   const [customerName, setCustomerName] = useState("");
   const [projectType, setProjectType] = useState("3BHK");
   const [comments, setComments] = useState("");
@@ -223,9 +238,10 @@ function CompareForm({ onBack, onComplete }) {
     if (hlSource === 'url' && !hlUrl) return setError("Please provide the HomeLane quote Weblink.");
     if (hlSource === 'text' && !hlRawText) return setError("Please paste the HomeLane quote text.");
     
-    // Competitor quotes are now fully optional
-    const hasComp1 = comp1Source === 'pdf' ? !!comp1File : (comp1Source === 'url' ? !!comp1Url : !!comp1RawText);
-    const hasComp2 = comp2Source === 'pdf' ? !!comp2File : (comp2Source === 'url' ? !!comp2Url : !!comp2RawText);
+    // Competitor quotes are now fully optional (and ignored in Optimiser mode)
+    const isOptimiser = formMode === 'optimiser';
+    const hasComp1 = isOptimiser ? false : (comp1Source === 'pdf' ? !!comp1File : (comp1Source === 'url' ? !!comp1Url : !!comp1RawText));
+    const hasComp2 = isOptimiser ? false : (comp2Source === 'pdf' ? !!comp2File : (comp2Source === 'url' ? !!comp2Url : !!comp2RawText));
 
     setIsAnalysing(true);
     const interval = setInterval(() => setStep(s => s < 2 ? s + 1 : s), 3000);
@@ -259,7 +275,7 @@ function CompareForm({ onBack, onComplete }) {
 
       onComplete({
         ...data,
-        meta: { projectType, customerName },
+        meta: { projectType, customerName, formMode },
         date: new Date().toLocaleDateString("en-IN")
       });
     } catch (err) {
@@ -428,8 +444,8 @@ function CompareForm({ onBack, onComplete }) {
             </div>
 
             {renderQuoteSection('hl', 'HomeLane Quote', hlSource, setHlSource, hlFile, setHlFile, hlUrl, setHlUrl, hlRawText, setHlRawText)}
-            {renderQuoteSection('comp1', 'Competitor Quote I', comp1Source, setComp1Source, comp1File, setComp1File, comp1Url, setComp1Url, comp1RawText, setComp1RawText, true)}
-            {renderQuoteSection('comp2', 'Competitor Quote II', comp2Source, setComp2Source, comp2File, setComp2File, comp2Url, setComp2Url, comp2RawText, setComp2RawText, true)}
+            {formMode === 'comparator' && renderQuoteSection('comp1', 'Competitor Quote I', comp1Source, setComp1Source, comp1File, setComp1File, comp1Url, setComp1Url, comp1RawText, setComp1RawText, true)}
+            {formMode === 'comparator' && renderQuoteSection('comp2', 'Competitor Quote II', comp2Source, setComp2Source, comp2File, setComp2File, comp2Url, setComp2Url, comp2RawText, setComp2RawText, true)}
 
             <div className="compare-fieldset borderless">
               <div className="fieldset-header rich-header">
@@ -449,7 +465,7 @@ function CompareForm({ onBack, onComplete }) {
             </div>
 
             <button type="submit" className="btn btn-primary saas-submit-btn hungry">
-               RUN INTELLIGENCE ANALYSIS →
+               {formMode === 'optimiser' ? 'OPTIMIZE HOMELANE QUOTE →' : 'RUN COMPARATIVE ANALYSIS →'}
             </button>
           </form>
         </div>
@@ -611,6 +627,7 @@ function ResultsView({ result, onBack, onNew }) {
 
         {result.validation?.isValidHomeLane && (
           <>
+            <WaterfallVisualizer result={result} />
             {comps.map((c, idx) => c.monetarySummary && (
               <div key={idx} className="monetary-summary glass-card" style={{ marginBottom: '1.5rem' }}>
                 <div className="ms-header">
@@ -920,6 +937,104 @@ function BreakdownCard({ title, data, isHL, rooms, providerKey }) {
           </ResponsiveContainer>
         </div>
       )}
+    </div>
+  );
+}
+
+function WaterfallVisualizer({ result }) {
+  const parseCurrency = (val) => {
+    if (!val) return 0;
+    const num = Number(String(val).replace(/[^0-9.-]+/g, ""));
+    return isNaN(num) ? 0 : num;
+  };
+
+  const startPrice = parseCurrency(result.hlPrice);
+  if (!startPrice || !result.hlOptimisations || result.hlOptimisations.length === 0) return null;
+
+  let currentPrice = startPrice;
+  const steps = [
+    {
+      label: "Original Quote Price",
+      price: startPrice,
+      delta: 0,
+      category: "Start",
+      description: "Initial proposal pricing received from client quote."
+    }
+  ];
+
+  result.hlOptimisations.forEach((opt) => {
+    const savings = parseCurrency(opt.savings);
+    if (savings > 0) {
+      currentPrice -= savings;
+      steps.push({
+        label: opt.category,
+        price: currentPrice,
+        delta: savings,
+        description: opt.recommended,
+        category: opt.category
+      });
+    }
+  });
+
+  if (steps.length <= 1) return null;
+
+  return (
+    <div className="results-section glass-card" style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(246, 248, 250, 0.9) 100%)', border: '1px solid rgba(16, 185, 129, 0.25)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.05)', marginBottom: '2rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <h3 className="section-title" style={{ margin: 0, color: 'var(--green)', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.4rem' }}>
+            📉 Value Engineering Waterfall
+          </h3>
+          <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '0.25rem 0 0 0' }}>
+            Step-by-step price reduction based on Category Team guidelines and design optimization strategies.
+          </p>
+        </div>
+        <div style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--green)', padding: '0.4rem 0.8rem', borderRadius: '20px', fontWeight: 'bold', fontSize: '0.88rem' }}>
+          Total Savings: ₹ {(startPrice - currentPrice).toLocaleString('en-IN')} ({-(((startPrice - currentPrice) / startPrice) * 100).toFixed(0)}%)
+        </div>
+      </div>
+
+      <div className="waterfall-staircase" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', padding: '0.5rem 0' }}>
+        {steps.map((step, idx) => {
+          const isStart = idx === 0;
+          const isEnd = idx === steps.length - 1;
+          const percentLeft = (step.price / startPrice) * 100;
+          
+          const barColor = isStart 
+            ? 'linear-gradient(90deg, #f97316 0%, #f59e0b 100%)' 
+            : isEnd 
+              ? 'linear-gradient(90deg, #10b981 0%, #059669 100%)' 
+              : 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)';
+
+          return (
+            <div key={idx} className="waterfall-step-row select-hover-effect" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1.5rem', alignItems: 'center', padding: '0.75rem', borderRadius: '8px', background: isEnd ? 'rgba(16,185,129,0.04)' : 'rgba(255,255,255,0.6)', border: isEnd ? '1px solid rgba(16,185,129,0.2)' : '1px solid var(--border)', transition: 'all 0.25s ease' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', borderRight: '1px solid var(--border)', paddingRight: '1rem' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 'bold', textTransform: 'uppercase', color: isStart ? '#f97316' : isEnd ? '#10b981' : 'var(--primary)', letterSpacing: '0.05em' }}>
+                  {isStart ? 'Initial Quote' : isEnd ? 'Optimized Total' : `Step ${idx}: ${step.label}`}
+                </span>
+                <span style={{ fontSize: '1.2rem', fontWeight: '700', color: 'var(--text-primary)', marginTop: '0.15rem' }}>
+                  ₹ {Math.round(step.price).toLocaleString('en-IN')}
+                </span>
+                {!isStart && (
+                  <span style={{ fontSize: '0.82rem', fontWeight: '600', color: 'var(--green)', marginTop: '0.1rem', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                    📉 -₹ {Math.round(step.delta).toLocaleString('en-IN')}
+                  </span>
+                )}
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', width: '100%' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                  <span style={{ fontWeight: '500', color: 'var(--text-primary)', lineHeight: '1.4' }}>{step.description}</span>
+                  <span style={{ fontWeight: '700', color: 'var(--text-secondary)', marginLeft: '1rem', whiteSpace: 'nowrap' }}>{percentLeft.toFixed(0)}% Left</span>
+                </div>
+                <div className="waterfall-progress-bg" style={{ height: '8px', width: '100%', background: 'rgba(0,0,0,0.05)', borderRadius: '4px', overflow: 'hidden' }}>
+                  <div className="waterfall-progress-bar" style={{ height: '100%', width: `${percentLeft}%`, background: barColor, borderRadius: '4px', transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)' }}></div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
