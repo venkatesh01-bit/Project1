@@ -59,7 +59,7 @@ export default function ComparePage() {
   const renderDashboard = () => (
     <div className="page active light-theme" id="page-dashboard">
       <div className="engine-backdrop light">
-        <img src="file:///Users/venkateshg/.gemini/antigravity/brain/c53784ce-fa8e-4921-a407-ea42942b484a/light_luxury_interior_v3_1774009725168.png" alt="" />
+        <img src="/images/light_luxury_interior_v3.png" alt="" />
         <div className="backdrop-overlay light"></div>
       </div>
 
@@ -567,7 +567,7 @@ function ResultsView({ result, onBack, onNew }) {
   return (
     <div className="page active light-theme">
       <div className="engine-backdrop light">
-        <img src="file:///Users/venkateshg/.gemini/antigravity/brain/c53784ce-fa8e-4921-a407-ea42942b484a/light_luxury_interior_v3_1774009725168.png" alt="" />
+        <img src="/images/light_luxury_interior_v3.png" alt="" />
         <div className="backdrop-overlay light"></div>
       </div>
 

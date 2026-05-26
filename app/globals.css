@@ -2324,3 +2324,29 @@ table.factor-table {
   border-color: var(--primary-hungry-glow) !important;
   transform: scale(1.005);
 }
+
+/* ============================================================
+   ENGINE BACKDROP & LIGHT GRAPHICS STYLING (PREMIUM THEME)
+   ============================================================ */
+.engine-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.engine-backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.96) blur(2px);
+  transition: filter var(--t-med);
+}
+
+.backdrop-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, rgba(248, 250, 252, 0.88) 100%);
+  z-index: 1;
+}
