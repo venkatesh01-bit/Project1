@@ -386,12 +386,18 @@ You must run in **OPTIMIZATION-ONLY MODE**:
 2. Set 'competitors' array to an empty array [].
 3. For 'rooms' array, populate room details with only the HomeLane pricing ('hlValue') and note down specific layout observations or where you think pricing is high. Leave competitor values as null/'-'.
 4. For 'factors' array, list the factors for HomeLane woodwork/specifications. Leave competitor values as null/'-'.
-5. Populate 'actionPlan' with specific strategies for the sales rep to pitch this proposal, convince the client of HomeLane's quality, and close the deal.`;
+5. Populate 'actionPlan' with specific strategies for the sales rep to pitch this proposal, convince the client of HomeLane's quality, and close the deal.
+
+CRITICAL CONCISENESS RULE FOR STABILITY:
+To prevent token truncation and parsing errors, keep all descriptions, notes, and rationales extremely brief (strictly under 15 words per explanation/note). Focus on raw numbers and key technical details.`;
     } else {
       dynamicSystemPrompt = SYSTEM_PROMPT + `\n\n### IMPORTANT NOTICE: COMPETITOR QUOTE IS PRESENT.
 You must run in **COMPARISON & BEAT-COMPETITOR MODE**:
 1. Identify all gaps, discrepancies, and missed scopes between HomeLane and the competitor quotes.
-2. Provide strategic counter-arguments and specific opportunities in 'hlOptimisations' and 'actionPlan' to reduce HomeLane's price to beat the competitor quote while ensuring robust sales closing strategies.`;
+2. Provide strategic counter-arguments and specific opportunities in 'hlOptimisations' and 'actionPlan' to reduce HomeLane's price to beat the competitor quote while ensuring robust sales closing strategies.
+
+CRITICAL CONCISENESS RULE FOR STABILITY:
+To prevent token truncation and parsing errors, keep all descriptions, notes, and rationales extremely brief (strictly under 15 words per explanation/note). Focus on raw numbers and key technical details.`;
     }
 
     const userMessage = `
